@@ -66,77 +66,77 @@ namespace vMenuClient.menus
         private void CreateMenu()
         {
             // Create the menu.
-            menu = new Menu(Game.Player.Name, "Vehicle Options");
+            menu = new Menu(Game.Player.Name, "Options de véhicules");
 
             #region menu items variables
             // vehicle god mode menu
-            var vehGodMenu = new Menu("Vehicle Godmode", "Vehicle Godmode Options");
-            var vehGodMenuBtn = new MenuItem("God Mode Options", "Enable or disable specific damage types.") { Label = "→→→" };
+            var vehGodMenu = new Menu("Options d'invicibilité", "Options d'invicibilité");
+            var vehGodMenuBtn = new MenuItem("Options d'invicibilité", "Activer ou désactiver certains types de dégâts.") { Label = "→→→" };
             MenuController.AddSubmenu(menu, vehGodMenu);
 
             // Create Checkboxes.
-            var vehicleGod = new MenuCheckboxItem("Vehicle God Mode", "Makes your vehicle not take any damage. Note, you need to go into the god menu options below to select what kind of damage you want to disable.", VehicleGodMode);
-            var vehicleNeverDirty = new MenuCheckboxItem("Keep Vehicle Clean", "This will constantly clean your car if the vehicle dirt level goes above 0. Note that this only cleans ~o~dust~s~ or ~o~dirt~s~. This does not clean mud, snow or other ~r~damage decals~s~. Repair your vehicle to remove them.", VehicleNeverDirty);
-            var vehicleBikeSeatbelt = new MenuCheckboxItem("Bike Seatbelt", "Prevents you from being knocked off your bike, bicyle, ATV or similar.", VehicleBikeSeatbelt);
-            var vehicleEngineAO = new MenuCheckboxItem("Engine Always On", "Keeps your vehicle engine on when you exit your vehicle.", VehicleEngineAlwaysOn);
-            var vehicleNoTurbulence = new MenuCheckboxItem("Disable Plane Turbulence", "Disables the turbulence for all planes.", DisablePlaneTurbulence);
-            var vehicleNoTurbulenceHeli = new MenuCheckboxItem("Disable Helicopter Turbulence", "Disables the turbulence for all helicopters.", DisableHelicopterTurbulence);
-            var vehicleNoSiren = new MenuCheckboxItem("Disable Siren", "Disables your vehicle's siren. Only works if your vehicle actually has a siren.", VehicleNoSiren);
-            var vehicleNoBikeHelmet = new MenuCheckboxItem("No Bike Helmet", "No longer auto-equip a helmet when getting on a bike or quad.", VehicleNoBikeHelemet);
-            var vehicleFreeze = new MenuCheckboxItem("Freeze Vehicle", "Freeze your vehicle's position.", VehicleFrozen);
-            var torqueEnabled = new MenuCheckboxItem("Enable Torque Multiplier", "Enables the torque multiplier selected from the list below.", VehicleTorqueMultiplier);
-            var powerEnabled = new MenuCheckboxItem("Enable Power Multiplier", "Enables the power multiplier selected from the list below.", VehiclePowerMultiplier);
-            var highbeamsOnHonk = new MenuCheckboxItem("Flash Highbeams On Honk", "Turn on your highbeams on your vehicle when honking your horn. Does not work during the day when you have your lights turned off.", FlashHighbeamsOnHonk);
-            var showHealth = new MenuCheckboxItem("Show Vehicle Health", "Shows the vehicle health on the screen.", VehicleShowHealth);
-            var infiniteFuel = new MenuCheckboxItem("Infinite Fuel", "Enables or disables infinite fuel for this vehicle, only works if FRFuel is installed.", VehicleInfiniteFuel);
+            var vehicleGod = new MenuCheckboxItem("Véhicule invincible", "Fait en sorte que votre véhicule ne subisse aucun dommage. Notez que vous devez accéder aux options du menu divin ci-dessous pour sélectionner le type de dommage que vous souhaitez désactiver.", VehicleGodMode);
+            var vehicleNeverDirty = new MenuCheckboxItem("Garder le véhicule propre", "Cela nettoiera constamment votre voiture si le niveau de saleté du véhicule dépasse 0. Notez que cela ne nettoie que les ~o~poussières~s~ ou ~o~saletés~s~. Cela ne nettoie pas la boue, la neige ou d'autres ~r~décalcomanies~s~. Réparez votre véhicule pour les supprimer.", VehicleNeverDirty);
+            var vehicleBikeSeatbelt = new MenuCheckboxItem("Ceinture sur vélo", "Vous empêche d'être renversé de votre vélo, vélo, VTT ou similaire.", VehicleBikeSeatbelt);
+            var vehicleEngineAO = new MenuCheckboxItem("Moteur toujours allumé", "Maintient le moteur de votre véhicule allumé lorsque vous quittez votre véhicule.", VehicleEngineAlwaysOn);
+            var vehicleNoTurbulence = new MenuCheckboxItem("Désactiver les turbulances en avion", "Désactive la turbulence pour tous les avions. Remarque ne fonctionne que pour les avions. Les hélicoptères et autres véhicules volants ne sont pas pris en charge.", DisablePlaneTurbulence);
+            var vehicleNoTurbulenceHeli = new MenuCheckboxItem("Désactiver les turburlances en hélico", "Désactive les turbulences pour tous les hélicoptères", DisableHelicopterTurbulence);
+            var vehicleNoSiren = new MenuCheckboxItem("Désactiver la sirène", "Désactive la sirène de votre véhicule. Ne fonctionne que si votre véhicule est effectivement équipé d'une sirène.", VehicleNoSiren);
+            var vehicleNoBikeHelmet = new MenuCheckboxItem("Pas de casque à moto", "Votre personnage ne s'équipe plus d'un casque quand il se trouve sur un deux roues.", VehicleNoBikeHelemet);
+            var vehicleFreeze = new MenuCheckboxItem("Immobiliser le véhicule", "Immobilise le véhicule", VehicleFrozen);
+            var torqueEnabled = new MenuCheckboxItem("Activer le multiplicateur de couple", "Active le multiplicateur de couple sélectionné dans la liste ci-dessous.", VehicleTorqueMultiplier);
+            var powerEnabled = new MenuCheckboxItem("Activer le multiplicateur de puissance", "Active le multiplicateur de puissance sélectionné dans la liste ci-dessous.", VehiclePowerMultiplier);
+            var highbeamsOnHonk = new MenuCheckboxItem("Appels de phares en klaxonnant", "Allumez vos feux de route sur votre véhicule lorsque vous klaxonnez. Ne fonctionne pas pendant la journée lorsque vos lumières sont éteintes.", FlashHighbeamsOnHonk);
+            var showHealth = new MenuCheckboxItem("Afficher l'état du véhicule", "Affiche l'état du véhicule à l'écran.", VehicleShowHealth);
+            var infiniteFuel = new MenuCheckboxItem("Carburant infini", "Active ou désactive le carburant infini pour ce véhicule.", VehicleInfiniteFuel);
 
             // Create buttons.
-            var fixVehicle = new MenuItem("Repair Vehicle", "Repair any visual and physical damage present on your vehicle.");
-            var cleanVehicle = new MenuItem("Wash Vehicle", "Clean your vehicle.");
-            var toggleEngine = new MenuItem("Toggle Engine On/Off", "Turn your engine on/off.");
-            var setLicensePlateText = new MenuItem("Set License Plate Text", "Enter a custom license plate for your vehicle.");
-            var modMenuBtn = new MenuItem("Mod Menu", "Tune and customize your vehicle here.")
+            var fixVehicle = new MenuItem("Réparer le véhicule", "Réparez tout dommage visuel et physique présent sur votre véhicule.");
+            var cleanVehicle = new MenuItem("Laver le véhicule", "Nettoyer son véhicule");
+            var toggleEngine = new MenuItem("Allumer/Eteindre le moteur", "Allumer/Eteindre le moteur.");
+            var setLicensePlateText = new MenuItem("Définir la plaque d'immatriculation", "Entrez une plaque d'immatriculation personnalisée pour votre véhicule.");
+            var modMenuBtn = new MenuItem("Menu des modules du véhicule", "Réglez et personnalisez votre véhicule ici.")
             {
                 Label = "→→→"
             };
-            var doorsMenuBtn = new MenuItem("Vehicle Doors", "Open, close, remove and restore vehicle doors here.")
+            var doorsMenuBtn = new MenuItem("Portes du véhicule", "Ouvrez, fermez, retirez et restaurez les portes du véhicule ici.")
             {
                 Label = "→→→"
             };
-            var windowsMenuBtn = new MenuItem("Vehicle Windows", "Roll your windows up/down or remove/restore your vehicle windows here.")
+            var windowsMenuBtn = new MenuItem("Fenêtres du véhicule", "Roulez vos vitres vers le haut/bas ou retirez/restaurez les vitres de votre véhicule ici.")
             {
                 Label = "→→→"
             };
-            var componentsMenuBtn = new MenuItem("Vehicle Extras", "Add/remove vehicle components/extras.")
+            var componentsMenuBtn = new MenuItem("Extras du véhicule", "Ajouter/supprimer des composants/extras du véhicule.")
             {
                 Label = "→→→"
             };
-            var liveriesMenuBtn = new MenuItem("Vehicle Liveries", "Style your vehicle with fancy liveries!")
+            var liveriesMenuBtn = new MenuItem("Livrées du véhicule", "Donnez du style à votre véhicule avec des livrées fantaisistes!")
             {
                 Label = "→→→"
             };
-            var colorsMenuBtn = new MenuItem("Vehicle Colors", "Style your vehicle even further by giving it some ~g~Snailsome ~s~colors!")
+            var colorsMenuBtn = new MenuItem("Couleurs du véhicule", "Donnez encore plus de style à votre véhicule en lui donnant quelques effets de couleurs!")
             {
                 Label = "→→→"
             };
-            var underglowMenuBtn = new MenuItem("Vehicle Neon Kits", "Make your vehicle shine with some fancy neon underglow!")
+            var underglowMenuBtn = new MenuItem("Néons du véhicule", "Faites briller votre véhicule avec un éclairage néon fantaisie!")
             {
                 Label = "→→→"
             };
-            var vehicleInvisible = new MenuItem("Toggle Vehicle Visibility", "Makes your vehicle visible/invisible. ~r~Your vehicle will be made visible again as soon as you leave the vehicle. Otherwise you would not be able to get back in.");
-            var flipVehicle = new MenuItem("Flip Vehicle", "Sets your current vehicle on all 4 wheels.");
-            var vehicleAlarm = new MenuItem("Toggle Vehicle Alarm", "Starts/stops your vehicle's alarm.");
-            var cycleSeats = new MenuItem("Cycle Through Vehicle Seats", "Cycle through the available vehicle seats.");
+            var vehicleInvisible = new MenuItem("Modifier la visibilité du véhicule", "Rend votre véhicule visible/invisible. ~r~Votre véhicule redeviendra visible dès que vous quitterez le véhicule. Sinon, vous ne pourrez pas rentrer.");
+            var flipVehicle = new MenuItem("Retourner véhicule", "Définit votre véhicule actuel sur les 4 roues.");
+            var vehicleAlarm = new MenuItem("Basculer l'alarme du véhicule", "Démarre/arrête l'alarme de votre véhicule.");
+            var cycleSeats = new MenuItem("Faire défiler les sièges du véhicule", "Parcourez les sièges de véhicule disponibles.");
             var lights = new List<string>()
             {
-                "Hazard Lights",
-                "Left Indicator",
-                "Right Indicator",
-                "Interior Lights",
+                "Feux de détresse",
+                "Clignotant gauche",
+                "Clignotant droite",
+                "Lumières intérieurs",
                 //"Taxi Light", // this doesn't seem to work no matter what.
-                "Helicopter Spotlight",
+                "Projecteur de l'hélico",
             };
-            var vehicleLights = new MenuListItem("Vehicle Lights", lights, 0, "Turn vehicle lights on/off.");
+            var vehicleLights = new MenuListItem("Lumières du véhicule", lights, 0, "Allumer/Eteindre les lumières du véhicule.");
 
             var stationNames = new List<string>();
 
@@ -154,44 +154,43 @@ namespace vMenuClient.menus
                 radioIndex = index;
             }
 
-            var radioStations = new MenuListItem("Default radio station", stationNames, radioIndex, "Select a defalut radio station to be set when spawning new car");
+            var radioStations = new MenuListItem("Station de radio par défaut", stationNames, radioIndex, "Sélectionnez une station de radio par défaut à définir lors de la création d'une nouvelle voiture");
 
-            var tiresList = new List<string>() { "All Tires", "Tire #1", "Tire #2", "Tire #3", "Tire #4", "Tire #5", "Tire #6", "Tire #7", "Tire #8" };
-            var vehicleTiresList = new MenuListItem("Fix / Destroy Tires", tiresList, 0, "Fix or destroy a specific vehicle tire, or all of them at once. Note, not all indexes are valid for all vehicles, some might not do anything on certain vehicles.");
+            var tiresList = new List<string>() { "Tous les pneus", "Pneu #1", "Pneu #2", "Pneu #3", "Pneu #4", "Pneu #5", "Pneu #6", "Pneu #7", "Pneu #8" };
+            var vehicleTiresList = new MenuListItem("Réparer / Détruire le(s) pneu(s)", tiresList, 0, "Réparez ou détruisez un pneu de véhicule spécifique, ou tous à la fois. Notez que tous les index ne sont pas valables pour tous les véhicules, certains peuvent ne rien faire sur certains véhicules.");
 
-            var destroyEngine = new MenuItem("Destroy Engine", "Destroys your vehicle's engine.");
+            var destroyEngine = new MenuItem("Détruire le moteur", "Détruire le moteur de votre véhicule.");
 
-            var deleteBtn = new MenuItem("~r~Delete Vehicle", "Delete your vehicle, this ~r~can NOT be undone~s~!")
+            var deleteBtn = new MenuItem("~r~Supprimer le véhicule", "Supprimez votre véhicule, cela ~r~ne peut PAS être annulé~s~!")
             {
                 LeftIcon = MenuItem.Icon.WARNING,
                 Label = "→→→"
             };
-            var deleteNoBtn = new MenuItem("NO, CANCEL", "NO, do NOT delete my vehicle and go back!");
-            var deleteYesBtn = new MenuItem("~r~YES, DELETE", "Yes I'm sure, delete my vehicle please, I understand that this cannot be undone.")
+            var deleteNoBtn = new MenuItem("NON, ANNULER", "NON, ne supprimez PAS mon véhicule et revenez !");
+            var deleteYesBtn = new MenuItem("~r~OUI, SUPPRIMER", "Oui, je suis sûr, supprimez mon véhicule s'il vous plaît, je comprends que cela ne peut pas être annulé.")
             {
                 LeftIcon = MenuItem.Icon.WARNING
             };
 
             // Create lists.
-            var dirtlevel = new List<string> { "No Dirt", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" };
-            var setDirtLevel = new MenuListItem("Set Dirt Level", dirtlevel, 0, "Select how much dirt should be visible on your vehicle, press ~r~enter~s~ " +
-                "to apply the selected level.");
+            var dirtlevel = new List<string> { "Propre", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" };
+            var setDirtLevel = new MenuListItem("Modifier le niveau de saleté", dirtlevel, 0, "Sélectionnez la quantité de saleté qui doit être visible sur votre véhicule, appuyez sur ~r~enter~s~ pour appliquer le niveau sélectionné.");
             var licensePlates = new List<string> { GetLabelText("CMOD_PLA_0"), GetLabelText("CMOD_PLA_1"), GetLabelText("CMOD_PLA_2"), GetLabelText("CMOD_PLA_3"),
                 GetLabelText("CMOD_PLA_4"), "North Yankton" };
-            var setLicensePlateType = new MenuListItem("License Plate Type", licensePlates, 0, "Choose a license plate type and press ~r~enter ~s~to apply " +
-                "it to your vehicle.");
+            var setLicensePlateType = new MenuListItem("Type de plaque d'immatriculation", licensePlates, 0, "Choisissez un type de plaque d'immatriculation et appuyez sur ~r~enter ~s~pour appliquer " +
+                "à votre véhicule.");
             var torqueMultiplierList = new List<string> { "x2", "x4", "x8", "x16", "x32", "x64", "x128", "x256", "x512", "x1024" };
-            var torqueMultiplier = new MenuListItem("Set Engine Torque Multiplier", torqueMultiplierList, 0, "Set the engine torque multiplier.");
+            var torqueMultiplier = new MenuListItem("Définir le multiplicateur de couple moteur", torqueMultiplierList, 0, "Définir le multiplicateur de couple moteur.");
             var powerMultiplierList = new List<string> { "x2", "x4", "x8", "x16", "x32", "x64", "x128", "x256", "x512", "x1024" };
-            var powerMultiplier = new MenuListItem("Set Engine Power Multiplier", powerMultiplierList, 0, "Set the engine power multiplier.");
-            var speedLimiterOptions = new List<string>() { "Set", "Reset", "Custom Speed Limit" };
-            var speedLimiter = new MenuListItem("Speed Limiter", speedLimiterOptions, 0, "Set your vehicles max speed to your ~y~current speed~s~. Resetting your vehicles max speed will set the max speed of your current vehicle back to default. Only your current vehicle is affected by this option.");
+            var powerMultiplier = new MenuListItem("Définir le multiplicateur de puissance du moteur", powerMultiplierList, 0, "Définir le multiplicateur de puissance du moteur.");
+            var speedLimiterOptions = new List<string>() { "Activer", "Remettre à zéro", "Limite personnalisé" };
+            var speedLimiter = new MenuListItem("Limiteur de vitesse", speedLimiterOptions, 0, "Réglez la vitesse maximale de votre véhicule sur votre ~y~vitesse actuelle~s~. La réinitialisation de la vitesse maximale de votre véhicule rétablira la vitesse maximale de votre véhicule actuel par défaut. Seul votre véhicule actuel est concerné par cette option.");
             #endregion
 
             #region Submenus
             // Submenu's
-            VehicleModMenu = new Menu("Mod Menu", "Vehicle Mods");
-            VehicleModMenu.InstructionalButtons.Add(Control.Jump, "Toggle Vehicle Doors");
+            VehicleModMenu = new Menu("Menu des modules du véhicule", "Menu des modules du véhicule");
+            VehicleModMenu.InstructionalButtons.Add(Control.Jump, "Basculer l'état des portes du véhicule");
             VehicleModMenu.ButtonPressHandlers.Add(new Menu.ButtonPressHandler(Control.Jump, Menu.ControlPressCheckType.JUST_PRESSED, new Action<Menu, Control>((m, c) =>
             {
                 var veh = GetVehicle();
@@ -211,13 +210,13 @@ namespace vMenuClient.menus
                     }
                 }
             }), false));
-            VehicleDoorsMenu = new Menu("Vehicle Doors", "Vehicle Doors Management");
-            VehicleWindowsMenu = new Menu("Vehicle Windows", "Vehicle Windows Management");
-            VehicleComponentsMenu = new Menu("Vehicle Extras", "Vehicle Extras/Components");
-            VehicleLiveriesMenu = new Menu("Vehicle Liveries", "Vehicle Liveries");
-            VehicleColorsMenu = new Menu("Vehicle Colors", "Vehicle Colors");
-            DeleteConfirmMenu = new Menu("Confirm Action", "Delete Vehicle, Are You Sure?");
-            VehicleUnderglowMenu = new Menu("Vehicle Neon Kits", "Vehicle Neon Underglow Options");
+            VehicleDoorsMenu = new Menu("Portes du véhicule", "Gestion des portes du véhicule");
+            VehicleWindowsMenu = new Menu("Fenêtres du véhicule", "Gestion des fenêtres du véhicule");
+            VehicleComponentsMenu = new Menu("Extras du véhicule", "Composants/Extras du véhicule");
+            VehicleLiveriesMenu = new Menu("Livrées du véhicule", "Livrées du véhicule");
+            VehicleColorsMenu = new Menu("Couleurs du véhicule", "Couleurs du véhicule");
+            DeleteConfirmMenu = new Menu("Confirmer l'action", "Supprimer le véhicule, êtes-vous sûrs ?");
+            VehicleUnderglowMenu = new Menu("Kits néons du véhicule", "Options de sous-éclairage au néon du véhicule");
 
             MenuController.AddSubmenu(menu, VehicleModMenu);
             MenuController.AddSubmenu(menu, VehicleDoorsMenu);
@@ -237,12 +236,12 @@ namespace vMenuClient.menus
                 menu.AddMenuItem(vehGodMenuBtn);
                 MenuController.BindMenuItem(menu, vehGodMenu, vehGodMenuBtn);
 
-                var godInvincible = new MenuCheckboxItem("Invincible", "Makes the car invincible. Includes fire damage, explosion damage, collision damage and more.", VehicleGodInvincible);
-                var godEngine = new MenuCheckboxItem("Engine Damage", "Disables your engine from taking any damage.", VehicleGodEngine);
-                var godVisual = new MenuCheckboxItem("Visual Damage", "This prevents scratches and other damage decals from being applied to your vehicle. It does not prevent (body) deformation damage.", VehicleGodVisual);
-                var godStrongWheels = new MenuCheckboxItem("Strong Wheels", "Disables your wheels from being deformed and causing reduced handling. This does not make tires bulletproof.", VehicleGodStrongWheels);
-                var godRamp = new MenuCheckboxItem("Ramp Damage", "Disables vehicles such as the Ramp Buggy from taking damage when using the ramp.", VehicleGodRamp);
-                var godAutoRepair = new MenuCheckboxItem("~r~Auto Repair", "Automatically repairs your vehicle when it has ANY type of damage. It's recommended to keep this turned off to prevent glitchyness.", VehicleGodAutoRepair);
+                var godInvincible = new MenuCheckboxItem("Invincible", "Rend la voiture invincible. Comprend les dégâts d'incendie, les dégâts d'explosion, les dégâts de collision et plus encore.", VehicleGodInvincible);
+                var godEngine = new MenuCheckboxItem("Dégâts du moteur", "Empêche votre moteur de subir des dommages.", VehicleGodEngine);
+                var godVisual = new MenuCheckboxItem("Dégâts visuels", "Cela empêche les rayures et autres autocollants de dommages d'être appliqués sur votre véhicule. Il n'empêche pas les dommages de déformation (du corps).", VehicleGodVisual);
+                var godStrongWheels = new MenuCheckboxItem("Roues solides", "Empêche vos roues d'être déformées et de réduire la maniabilité. Cela ne rend pas les pneus à l'épreuve des balles.", VehicleGodStrongWheels);
+                var godRamp = new MenuCheckboxItem("Dégâts de la rampe", "Empêche les véhicules tels que le buggy de la rampe de subir des dégâts lors de l'utilisation de la rampe.", VehicleGodRamp);
+                var godAutoRepair = new MenuCheckboxItem("~r~Réparation auto", "Répare automatiquement votre véhicule lorsqu'il présente TOUT type de dommage. Il est recommandé de garder cette option désactivée pour éviter les problèmes.", VehicleGodAutoRepair);
 
                 vehGodMenu.AddMenuItem(godInvincible);
                 vehGodMenu.AddMenuItem(godEngine);
@@ -445,7 +444,7 @@ namespace vMenuClient.menus
                         }
                         else
                         {
-                            Notify.Alert("You need to be in the driver's seat if you want to delete a vehicle.");
+                            Notify.Alert("Vous devez être dans le siège du conducteur si vous souhaitez supprimer un véhicule.");
                         }
 
                     }
@@ -549,7 +548,7 @@ namespace vMenuClient.menus
                     // If the player is not the driver seat and a button other than the option below (cycle seats) was pressed, notify them.
                     else if (item != cycleSeats)
                     {
-                        Notify.Error("You have to be the driver of a vehicle to access this menu!", true, false);
+                        Notify.Error("Vous devez être conducteur d'un véhicule pour accéder à ce menu !", true, false);
                     }
 
                     // Cycle vehicle seats
@@ -838,22 +837,22 @@ namespace vMenuClient.menus
 
                                 if (ShouldUseMetricMeasurements()) // kph
                                 {
-                                    Notify.Info($"Vehicle speed is now limited to ~b~{Math.Round(vehicle.Speed * 3.6f, 1)} KPH~s~.");
+                                    Notify.Info($"La vitesse du véhicule est maintenant limitée à ~b~{Math.Round(vehicle.Speed * 3.6f, 1)} km/h~s~.");
                                 }
                                 else // mph
                                 {
-                                    Notify.Info($"Vehicle speed is now limited to ~b~{Math.Round(vehicle.Speed * 2.237f, 1)} MPH~s~.");
+                                    Notify.Info($"La vitesse du véhicule est maintenant limitée à ~b~{Math.Round(vehicle.Speed * 2.237f, 1)} MPH~s~.");
                                 }
 
                             }
                             else if (listIndex == 1) // Reset
                             {
                                 SetEntityMaxSpeed(vehicle.Handle, 500.01f); // Default max speed seemingly for all vehicles.
-                                Notify.Info("Vehicle speed is now no longer limited.");
+                                Notify.Info("La vitesse du véhicule n'est plus limitée.");
                             }
                             else if (listIndex == 2) // custom speed
                             {
-                                var inputSpeed = await GetUserInput("Enter a speed (in meters/sec)", "20.0", 5);
+                                string inputSpeed = await GetUserInput("Entrez une vitesse (en mètres/seconde)", "20.0", 5);
                                 if (!string.IsNullOrEmpty(inputSpeed))
                                 {
                                     if (float.TryParse(inputSpeed, out var outFloat))
@@ -864,11 +863,11 @@ namespace vMenuClient.menus
                                         SetEntityMaxSpeed(vehicle.Handle, outFloat + 0.01f);
                                         if (ShouldUseMetricMeasurements()) // kph
                                         {
-                                            Notify.Info($"Vehicle speed is now limited to ~b~{Math.Round(outFloat * 3.6f, 1)} KPH~s~.");
+                                            Notify.Info($"La vitesse du véhicule est maintenant limitée à ~b~{Math.Round(outFloat * 3.6f, 1)} km/h~s~.");
                                         }
                                         else // mph
                                         {
-                                            Notify.Info($"Vehicle speed is now limited to ~b~{Math.Round(outFloat * 2.237f, 1)} MPH~s~.");
+                                            Notify.Info($"La vitesse du véhicule est maintenant limitée à ~b~{Math.Round(outFloat * 2.237f, 1)} MPH~s~.");
                                         }
                                     }
                                     else if (int.TryParse(inputSpeed, out var outInt))
@@ -878,16 +877,16 @@ namespace vMenuClient.menus
                                         SetEntityMaxSpeed(vehicle.Handle, outInt + 0.01f);
                                         if (ShouldUseMetricMeasurements()) // kph
                                         {
-                                            Notify.Info($"Vehicle speed is now limited to ~b~{Math.Round(outInt * 3.6f, 1)} KPH~s~.");
+                                            Notify.Info($"La vitesse du véhicule est maintenant limitée à ~b~{Math.Round((float)outInt * 3.6f, 1)} km/h~s~.");
                                         }
                                         else // mph
                                         {
-                                            Notify.Info($"Vehicle speed is now limited to ~b~{Math.Round(outInt * 2.237f, 1)} MPH~s~.");
+                                            Notify.Info($"La vitesse du véhicule est maintenant limitée à ~b~{Math.Round((float)outInt * 2.237f, 1)} MPH~s~.");
                                         }
                                     }
                                     else
                                     {
-                                        Notify.Error("This is not a valid number. Please enter a valid speed in meters per second.");
+                                        Notify.Error("Ce n'est pas un numéro valide. Veuillez saisir une vitesse valide en mètres par seconde.");
                                     }
                                 }
                                 else
@@ -915,7 +914,7 @@ namespace vMenuClient.menus
                                     {
                                         SetVehicleTyreFixed(veh.Handle, i);
                                     }
-                                    Notify.Success("All vehicle tyres have been fixed.");
+                                    Notify.Success("Tous les pneus du véhicule ont été réparés.");
                                 }
                                 else
                                 {
@@ -923,7 +922,7 @@ namespace vMenuClient.menus
                                     {
                                         SetVehicleTyreBurst(veh.Handle, i, false, 1f);
                                     }
-                                    Notify.Success("All vehicle tyres have been destroyed.");
+                                    Notify.Success("Tous les pneus du véhicule ont été détruits");
                                 }
                             }
                             else
@@ -932,12 +931,12 @@ namespace vMenuClient.menus
                                 if (IsVehicleTyreBurst(veh.Handle, index, false))
                                 {
                                     SetVehicleTyreFixed(veh.Handle, index);
-                                    Notify.Success($"Vehicle tyre #{listIndex} has been fixed.");
+                                    Notify.Success($"Le pneu #{listIndex} a été reparé.");
                                 }
                                 else
                                 {
                                     SetVehicleTyreBurst(veh.Handle, index, false, 1f);
-                                    Notify.Success($"Vehicle tyre #{listIndex} has been destroyed.");
+                                    Notify.Success($"Le pneu #{listIndex} a été détruit.");
                                 }
                             }
                         }
@@ -968,18 +967,18 @@ namespace vMenuClient.menus
 
             #region Vehicle Colors Submenu Stuff
             // primary menu
-            var primaryColorsMenu = new Menu("Vehicle Colors", "Primary Colors");
+            var primaryColorsMenu = new Menu("Couleurs du véhicule", "Couleur Principale");
             MenuController.AddSubmenu(VehicleColorsMenu, primaryColorsMenu);
 
-            var primaryColorsBtn = new MenuItem("Primary Color") { Label = "→→→" };
+            var primaryColorsBtn = new MenuItem("Couleur Principale") { Label = "→→→" };
             VehicleColorsMenu.AddMenuItem(primaryColorsBtn);
             MenuController.BindMenuItem(VehicleColorsMenu, primaryColorsMenu, primaryColorsBtn);
 
             // secondary menu
-            var secondaryColorsMenu = new Menu("Vehicle Colors", "Secondary Colors");
+            var secondaryColorsMenu = new Menu("Couleurs du véhicule", "Couleur Secondaire");
             MenuController.AddSubmenu(VehicleColorsMenu, secondaryColorsMenu);
 
-            var secondaryColorsBtn = new MenuItem("Secondary Color") { Label = "→→→" };
+            var secondaryColorsBtn = new MenuItem("Couleur Secondaire") { Label = "→→→" };
             VehicleColorsMenu.AddMenuItem(secondaryColorsBtn);
             MenuController.BindMenuItem(VehicleColorsMenu, secondaryColorsMenu, secondaryColorsBtn);
 
@@ -990,7 +989,7 @@ namespace vMenuClient.menus
             var util = new List<string>();
             var worn = new List<string>();
             var chameleon = new List<string>();
-            var wheelColors = new List<string>() { "Default Alloy" };
+            var wheelColors = new List<string>() { "Alliage par défaut" };
 
             // Just quick and dirty solution to put this in a new enclosed section so that we can still use 'i' as a counter in the other code parts.
             {
@@ -1042,12 +1041,12 @@ namespace vMenuClient.menus
                 wheelColors.AddRange(classic);
             }
 
-            var wheelColorsList = new MenuListItem("Wheel Color", wheelColors, 0);
-            var dashColorList = new MenuListItem("Dashboard Color", classic, 0);
-            var intColorList = new MenuListItem("Interior / Trim Color", classic, 0);
-            var vehicleEnveffScale = new MenuSliderItem("Vehicle Enveff Scale", "This works on certain vehicles only, like the besra for example. It 'fades' certain paint layers.", 0, 20, 10, true);
+            var wheelColorsList = new MenuListItem("Couleur des roues", wheelColors, 0);
+            var dashColorList = new MenuListItem("Couleur du tableau de bord", classic, 0);
+            var intColorList = new MenuListItem("Couleur de l'intérieur", classic, 0);
+            var vehicleEnveffScale = new MenuSliderItem("Échelle Enveff de véhicule", "Cela fonctionne sur certains véhicules uniquement, comme le besra par exemple. Il \"décolore\" certaines couches de peinture.", 0, 20, 10, true);
 
-            var chrome = new MenuItem("Chrome");
+            var chrome = new MenuItem("Chromé");
             VehicleColorsMenu.AddMenuItem(chrome);
             VehicleColorsMenu.AddMenuItem(vehicleEnveffScale);
 
@@ -1063,7 +1062,7 @@ namespace vMenuClient.menus
                 }
                 else
                 {
-                    Notify.Error("You need to be the driver of a driveable vehicle to change this.");
+                    Notify.Error("Vous devez être le conducteur d'un véhicule en état de marche pour changer cela.");
                 }
             };
             VehicleColorsMenu.OnSliderPositionChange += (m, sliderItem, oldPosition, newPosition, itemIndex) =>
@@ -1078,7 +1077,7 @@ namespace vMenuClient.menus
                 }
                 else
                 {
-                    Notify.Error("You need to be the driver of a driveable vehicle to change this slider.");
+                    Notify.Error("Vous devez être le conducteur d'un véhicule en état de marche pour modifier ce curseur.");
                 }
             };
 
@@ -1208,19 +1207,19 @@ namespace vMenuClient.menus
                 }
                 else
                 {
-                    Notify.Error("You need to be the driver of a vehicle in order to change the vehicle colors.");
+                    Notify.Error("Vous devez être le conducteur d'un véhicule afin de changer les couleurs du véhicule.");
                 }
             }
 
             for (var i = 0; i < 2; i++)
             {
-                var pearlescentList = new MenuListItem("Pearlescent", classic, 0);
-                var classicList = new MenuListItem("Classic", classic, 0);
-                var metallicList = new MenuListItem("Metallic", classic, 0);
-                var matteList = new MenuListItem("Matte", matte, 0);
-                var metalList = new MenuListItem("Metals", metals, 0);
+                var pearlescentList = new MenuListItem("Nacrée", classic, 0);
+                var classicList = new MenuListItem("Classique", classic, 0);
+                var metallicList = new MenuListItem("Métalisée", classic, 0);
+                var matteList = new MenuListItem("Mat", matte, 0);
+                var metalList = new MenuListItem("Métalique", metals, 0);
                 var utilList = new MenuListItem("Util", util, 0);
-                var wornList = new MenuListItem("Worn", worn, 0);
+                var wornList = new MenuListItem("Usée", worn, 0);
 
                 if (i == 0)
                 {
@@ -1256,20 +1255,20 @@ namespace vMenuClient.menus
             #endregion
 
             #region Vehicle Doors Submenu Stuff
-            var openAll = new MenuItem("Open All Doors", "Open all vehicle doors.");
-            var closeAll = new MenuItem("Close All Doors", "Close all vehicle doors.");
-            var LF = new MenuItem("Left Front Door", "Open/close the left front door.");
-            var RF = new MenuItem("Right Front Door", "Open/close the right front door.");
-            var LR = new MenuItem("Left Rear Door", "Open/close the left rear door.");
-            var RR = new MenuItem("Right Rear Door", "Open/close the right rear door.");
-            var HD = new MenuItem("Hood", "Open/close the hood.");
-            var TR = new MenuItem("Trunk", "Open/close the trunk.");
-            var E1 = new MenuItem("Extra 1", "Open/close the extra door (#1). Note this door is not present on most vehicles.");
-            var E2 = new MenuItem("Extra 2", "Open/close the extra door (#2). Note this door is not present on most vehicles.");
-            var BB = new MenuItem("Bomb Bay", "Open/close the bomb bay. Only available on some planes.");
-            var doors = new List<string>() { "Front Left", "Front Right", "Rear Left", "Rear Right", "Hood", "Trunk", "Extra 1", "Extra 2" };
-            var removeDoorList = new MenuListItem("Remove Door", doors, 0, "Remove a specific vehicle door completely.");
-            var deleteDoors = new MenuCheckboxItem("Delete Removed Doors", "When enabled, doors that you remove using the list above will be deleted from the world. If disabled, then the doors will just fall on the ground.", false);
+            var openAll = new MenuItem("Ouvrir toutes les portes", "Ouvre toutes les portes du véhicule.");
+            var closeAll = new MenuItem("Fermez toutes les portes", "Fermez toutes les portes du véhicule.");
+            var LF = new MenuItem("Porte Avant Gauche", "Ouvrir/fermer la porte avant gauche.");
+            var RF = new MenuItem("Porte Avant Droite", "Ouvrir/fermer la porte avant droite.");
+            var LR = new MenuItem("Porte Arrière Gauche", "Ouvrir/fermer la porte arrière gauche.");
+            var RR = new MenuItem("Porte Arrière Droite", "Ouvrir/fermer la porte arrière droite.");
+            var HD = new MenuItem("Capot", "Ouvrir/fermer le capot.");
+            var TR = new MenuItem("Coffre", "Ouvrir/fermer le coffre.");
+            var E1 = new MenuItem("Extra 1", "Ouvrir/fermer la porte supplémentaire (#1). Notez que cette porte n'est pas présente sur la plupart des véhicules.");
+            var E2 = new MenuItem("Extra 2", "Ouvrir/fermer la porte supplémentaire (#2). Notez que cette porte n'est pas présente sur la plupart des véhicules.");
+            var BB = new MenuItem("Soute à bombe", "Ouvrir/fermer la soute à bombes. Uniquement disponible sur certains avions.");
+            var doors = new List<string>() { "Avant Gauche", "Avant Droit", "Arrière Gauche", "Arrière Droit", "Capot", "Coffre", "Extra 1", "Extra 2" };
+            var removeDoorList = new MenuListItem("Retirer la porte", doors, 0, "Supprimer complètement une porte de véhicule spécifique.");
+            var deleteDoors = new MenuCheckboxItem("Supprimer les portes supprimées", "Lorsqu'elle est activée, les portes que vous supprimez à l'aide de la liste ci-dessus seront supprimées du monde. Si elle est désactivée, les portes tomberont simplement sur le sol.", false);
 
             VehicleDoorsMenu.AddMenuItem(LF);
             VehicleDoorsMenu.AddMenuItem(RF);
@@ -1374,17 +1373,17 @@ namespace vMenuClient.menus
                 }
                 else
                 {
-                    Notify.Alert(CommonErrors.NoVehicle, placeholderValue: "to open/close a vehicle door");
+                    Notify.Alert(CommonErrors.NoVehicle, placeholderValue: "pour ouvrir/fermer une porte du véhicule");
                 }
             };
 
             #endregion
 
             #region Vehicle Windows Submenu Stuff
-            var fwu = new MenuItem("~y~↑~s~ Roll Front Windows Up", "Roll both front windows up.");
-            var fwd = new MenuItem("~o~↓~s~ Roll Front Windows Down", "Roll both front windows down.");
-            var rwu = new MenuItem("~y~↑~s~ Roll Rear Windows Up", "Roll both rear windows up.");
-            var rwd = new MenuItem("~o~↓~s~ Roll Rear Windows Down", "Roll both rear windows down.");
+            var fwu = new MenuItem("~y~↑~s~ Fermer les fenêtres avant", "Fermer les fenêtres avant.");
+            var fwd = new MenuItem("~o~↓~s~ Ouvrir les fenêtres avant", "Ouvrir les fenêtres avant.");
+            var rwu = new MenuItem("~y~↑~s~ Fermer les fenêtres arrière", "Fermer les fenêtres arrière.");
+            var rwd = new MenuItem("~o~↓~s~ Ouvrir les fenêtres arrière", "Ouvrir les fenêtres arrière.");
             VehicleWindowsMenu.AddMenuItem(fwu);
             VehicleWindowsMenu.AddMenuItem(fwd);
             VehicleWindowsMenu.AddMenuItem(rwu);
@@ -1444,7 +1443,7 @@ namespace vMenuClient.menus
                                     livery = GetLabelText(livery) != "NULL" ? GetLabelText(livery) : $"Livery #{i}";
                                     liveryList.Add(livery);
                                 }
-                                var liveryListItem = new MenuListItem("Set Livery", liveryList, GetVehicleLivery(veh.Handle), "Choose a livery for this vehicle.");
+                                var liveryListItem = new MenuListItem("Modifier la livrée", liveryList, GetVehicleLivery(veh.Handle), "Choisissez une livrée pour ce véhicule.");
                                 VehicleLiveriesMenu.AddMenuItem(liveryListItem);
                                 VehicleLiveriesMenu.OnListIndexChange += (_menu, listItem, oldIndex, newIndex, itemIndex) =>
                                 {
@@ -1459,12 +1458,12 @@ namespace vMenuClient.menus
                             }
                             else
                             {
-                                Notify.Error("This vehicle does not have any liveries.");
+                                Notify.Error("Ce véhicule n'a pas de livrée.");
                                 VehicleLiveriesMenu.CloseMenu();
                                 menu.OpenMenu();
-                                var backBtn = new MenuItem("No Liveries Available :(", "Click me to go back.")
+                                var backBtn = new MenuItem("Aucune livrée disponible :(", "Cliquez pour revenir en arrière.")
                                 {
-                                    Label = "Go Back"
+                                    Label = "Retour"
                                 };
                                 VehicleLiveriesMenu.AddMenuItem(backBtn);
                                 VehicleLiveriesMenu.OnItemSelect += (sender2, item2, index2) =>
@@ -1481,12 +1480,12 @@ namespace vMenuClient.menus
                         }
                         else
                         {
-                            Notify.Error("You have to be the driver of a vehicle to access this menu.");
+                            Notify.Error("Vous devez être conducteur d'un véhicule pour accéder à ce menu.");
                         }
                     }
                     else
                     {
-                        Notify.Error("You have to be the driver of a vehicle to access this menu.");
+                        Notify.Error("Vous devez être conducteur d'un véhicule pour accéder à ce menu.");
                     }
                 }
             };
@@ -1558,7 +1557,7 @@ namespace vMenuClient.menus
 
                         if (vehicleExtras.Count > 0)
                         {
-                            var backBtn = new MenuItem("Go Back", "Go back to the Vehicle Options menu.");
+                            var backBtn = new MenuItem("Retour", "Retourner au menu Options du véhicule.");
                             VehicleComponentsMenu.AddMenuItem(backBtn);
                             VehicleComponentsMenu.OnItemSelect += (sender3, item3, index3) =>
                             {
@@ -1567,7 +1566,7 @@ namespace vMenuClient.menus
                         }
                         else
                         {
-                            var backBtn = new MenuItem("No Extras Available :(", "Go back to the Vehicle Options menu.")
+                            var backBtn = new MenuItem("Aucun extra disponible :(", "Retourner au menu Options du véhicule.")
                             {
                                 Label = "Go Back"
                             };
@@ -1592,16 +1591,33 @@ namespace vMenuClient.menus
                 if (vehicleExtras.TryGetValue(item, out var extra))
                 {
                     var veh = GetVehicle();
+                    var bodyHealth = GetVehicleBodyHealth(GetVehiclePedIsIn(GetPlayerPed(-1),false));
+                    
+                    var engineHealth = GetVehicleEngineHealth(GetVehiclePedIsIn(GetPlayerPed(-1),false));
+                    var wheelHealthA = GetVehicleWheelHealth(GetVehiclePedIsIn(GetPlayerPed(-1),false),0);
+                    var wheelHealthB = GetVehicleWheelHealth(GetVehiclePedIsIn(GetPlayerPed(-1),false),1);
+                    var wheelHealthC = GetVehicleWheelHealth(GetVehiclePedIsIn(GetPlayerPed(-1),false),2);
+                    var wheelHealthD = GetVehicleWheelHealth(GetVehiclePedIsIn(GetPlayerPed(-1),false),3);
+                    var tankHealth = GetVehiclePetrolTankHealth(GetVehiclePedIsIn(GetPlayerPed(-1),false));
+                    var fuelLevel = GetVehicleFuelLevel(GetVehiclePedIsIn(GetPlayerPed(-1),false));
                     veh.ToggleExtra(extra, _checked);
+                    SetVehicleBodyHealth(GetVehiclePedIsIn(GetPlayerPed(-1),false),bodyHealth);
+                    SetVehicleEngineHealth(GetVehiclePedIsIn(GetPlayerPed(-1),false),engineHealth);
+                    SetVehicleWheelHealth(GetVehiclePedIsIn(GetPlayerPed(-1),false),0,wheelHealthA);
+                    SetVehicleWheelHealth(GetVehiclePedIsIn(GetPlayerPed(-1),false),1,wheelHealthB);
+                    SetVehicleWheelHealth(GetVehiclePedIsIn(GetPlayerPed(-1),false),2,wheelHealthC);
+                    SetVehicleWheelHealth(GetVehiclePedIsIn(GetPlayerPed(-1),false),3,wheelHealthD);
+                    SetVehiclePetrolTankHealth(GetVehiclePedIsIn(GetPlayerPed(-1),false),tankHealth);
+                    SetVehicleFuelLevel(GetVehiclePedIsIn(GetPlayerPed(-1),false), fuelLevel);
                 }
             };
             #endregion
 
             #region Underglow Submenu
-            var underglowFront = new MenuCheckboxItem("Enable Front Light", "Enable or disable the underglow on the front side of the vehicle. Note not all vehicles have lights.", false);
-            var underglowBack = new MenuCheckboxItem("Enable Rear Light", "Enable or disable the underglow on the left side of the vehicle. Note not all vehicles have lights.", false);
-            var underglowLeft = new MenuCheckboxItem("Enable Left Light", "Enable or disable the underglow on the right side of the vehicle. Note not all vehicles have lights.", false);
-            var underglowRight = new MenuCheckboxItem("Enable Right Light", "Enable or disable the underglow on the back side of the vehicle. Note not all vehicles have lights.", false);
+            var underglowFront = new MenuCheckboxItem("Activer la lumière avant", "Activer ou désactiver le sous-éclairage à l'avant du véhicule. Notez que tous les véhicules n'ont pas de phares.", false);
+            var underglowBack = new MenuCheckboxItem("Activer la lumière arrière", "Activer ou désactiver le sous-éclairage à l'arrière du véhicule. Notez que tous les véhicules n'ont pas de phares.", false);
+            var underglowLeft = new MenuCheckboxItem("Activer la lumière de gauche", "Activer ou désactiver le sous-éclairage sur la gauche du véhicule. Notez que tous les véhicules n'ont pas de phares.", false);
+            var underglowRight = new MenuCheckboxItem("Activer la lumière de droite", "Activer ou désactiver le sous-éclairage sur la droite du véhicule. Notez que tous les véhicules n'ont pas de phares.", false);
             var underglowColorsList = new List<string>();
             for (var i = 0; i < 13; i++)
             {
@@ -1825,6 +1841,11 @@ namespace vMenuClient.menus
                     // Get the proper localized mod type (suspension, armor, etc) name.
                     var typeName = mod.LocalizedModTypeName;
 
+                    if (veh.Model.GetHashCode().ToString() != GetHashKey("g6charger").ToString() ||
+                        (typeName != "Spoiler" && typeName != "Front Bumper" && typeName != "Rear Bumper" &&
+                         typeName != "Skirt" && typeName != "Exhaust" && typeName != "Arceaux de sécurité" &&
+                         typeName != "Bonnet" && typeName != "Left Wing"))
+                    {
                     // Create a list to all available upgrades for this modtype.
                     var modlist = new List<string>();
 
@@ -1832,7 +1853,7 @@ namespace vMenuClient.menus
                     var currentItem = $"[1/{mod.ModCount + 1}]";
 
                     // Add the stock value for this mod.
-                    var name = $"Stock {typeName} {currentItem}";
+                        var name = $"{typeName} de série {currentItem}";
                     modlist.Add(name);
 
                     // Loop through all available upgrades for this specific mod type.
@@ -1852,7 +1873,7 @@ namespace vMenuClient.menus
                         typeName,
                         modlist,
                         currIndex,
-                        $"Choose a ~y~{typeName}~s~ upgrade, it will be automatically applied to your vehicle."
+                            $"Choisir une amélioration de ~y~{typeName}~s~, il sera automatiquement appliqué à votre véhicule."
                     )
                     {
                         ItemData = (int)mod.ModType
@@ -1861,6 +1882,8 @@ namespace vMenuClient.menus
                     // Add the list item to the menu.
                     VehicleModMenu.AddMenuItem(modTypeListItem);
                 }
+                }
+
                 #endregion
 
                 #region more variables and setup
@@ -1872,26 +1895,26 @@ namespace vMenuClient.menus
                     "Muscle",       // 1
                     "Lowrider",     // 2
                     "SUV",          // 3
-                    "Offroad",      // 4
-                    "Tuner",        // 5
-                    "Bike Wheels",  // 6
-                    "High End",     // 7
+                    "Tout-terrain",      // 4
+                    "Tunée",        // 5
+                    "Roues de vélo",  // 6
+                    "Haut de gamme",     // 7
                     "Benny's (1)",  // 8
                     "Benny's (2)",  // 9
-                    "Open Wheel",   // 10
-                    "Street"        // 11
+                    "Roue ouverte",   // 10
+                    "Rue",       // 11
                 };
-                var vehicleWheelType = new MenuListItem("Wheel Type", wheelTypes, MathUtil.Clamp(GetVehicleWheelType(veh.Handle), 0, 11), $"Choose a ~y~wheel type~s~ for your vehicle.");
+                var vehicleWheelType = new MenuListItem("Type de roue", wheelTypes, MathUtil.Clamp(GetVehicleWheelType(veh.Handle), 0, 12), $"Choisissez un ~y~type de roue~s~ pour votre véhicule.");
                 if (!veh.Model.IsBoat && !veh.Model.IsHelicopter && !veh.Model.IsPlane && !veh.Model.IsBicycle && !veh.Model.IsTrain)
                 {
                     VehicleModMenu.AddMenuItem(vehicleWheelType);
                 }
 
                 // Create the checkboxes for some options.
-                var toggleCustomWheels = new MenuCheckboxItem("Toggle Custom Wheels", "Press this to add or remove ~y~custom~s~ wheels.", GetVehicleModVariation(veh.Handle, 23));
-                var xenonHeadlights = new MenuCheckboxItem("Xenon Headlights", "Enable or disable ~b~xenon ~s~headlights.", IsToggleModOn(veh.Handle, 22));
-                var turbo = new MenuCheckboxItem("Turbo", "Enable or disable the ~y~turbo~s~ for this vehicle.", IsToggleModOn(veh.Handle, 18));
-                var bulletProofTires = new MenuCheckboxItem("Bullet Proof Tires", "Enable or disable ~y~bullet proof tires~s~ for this vehicle.", !GetVehicleTyresCanBurst(veh.Handle));
+                var toggleCustomWheels = new MenuCheckboxItem("(Dés)Activer les roues personnalisées", "Appuyez dessus pour ajouter ou supprimer ~y~custom~s~ roues.", GetVehicleModVariation(veh.Handle, 23));
+                var xenonHeadlights = new MenuCheckboxItem("Phares Xénon", "Activer ou désactiver les phares ~b~Xénon ~s~.", IsToggleModOn(veh.Handle, 22));
+                var turbo = new MenuCheckboxItem("Turbo", "Activez ou désactivez le ~y~turbo~s~ pour ce véhicule.", IsToggleModOn(veh.Handle, 18));
+                var bulletProofTires = new MenuCheckboxItem("Pneus pare-balles", "Activez ou désactivez les ~y~pneus pare-balles~s~ pour ce véhicule.", !GetVehicleTyresCanBurst(veh.Handle));
                 var lowGripTires = new MenuCheckboxItem("Low Grip Tires", "Enable or disable ~y~low grip tires~s~ for this vehicle.", GetDriftTyresEnabled(veh.Handle));
 
                 // Add the checkboxes to the menu.
@@ -1902,26 +1925,26 @@ namespace vMenuClient.menus
                 {
                     currentHeadlightColor = 13;
                 }
-                var headlightColor = new MenuListItem("Headlight Color", new List<string>() { "White", "Blue", "Electric Blue", "Mint Green", "Lime Green", "Yellow", "Golden Shower", "Orange", "Red", "Pony Pink", "Hot Pink", "Purple", "Blacklight", "Default Xenon" }, currentHeadlightColor, "New in the Arena Wars GTA V update: Colored headlights. Note you must enable Xenon Headlights first.");
+                var headlightColor = new MenuListItem("Couleur des phares", new List<string>() { "Blanc", "Bleu", "Bleu électrique", "Vert menthe", "Vert citron", "Jaune", "Golden Shower", "Orange", "Rouge", "Pony Pink", "Hot Pink", "Purple", "Blacklight", "Default Xenon" }, currentHeadlightColor, "Nouveau dans la mise à jour Arena Wars GTA V : phares colorés. Notez que vous devez d'abord activer les phares au xénon.");
                 VehicleModMenu.AddMenuItem(headlightColor);
                 VehicleModMenu.AddMenuItem(turbo);
                 VehicleModMenu.AddMenuItem(bulletProofTires);
                 VehicleModMenu.AddMenuItem(lowGripTires);
                 // Create a list of tire smoke options.
-                var tireSmokes = new List<string>() { "Red", "Orange", "Yellow", "Gold", "Light Green", "Dark Green", "Light Blue", "Dark Blue", "Purple", "Pink", "Black" };
+                var tireSmokes = new List<string>() { "Rouge", "Orange", "Jaune", "Or", "Vert clair", "Vert foncé", "Bleu clair", "Bleu foncé", "Violet", "Rose", "Noir" };
                 var tireSmokeColors = new Dictionary<string, int[]>()
                 {
-                    ["Red"] = new int[] { 244, 65, 65 },
-                    ["Orange"] = new int[] { 244, 167, 66 },
-                    ["Yellow"] = new int[] { 244, 217, 65 },
-                    ["Gold"] = new int[] { 181, 120, 0 },
-                    ["Light Green"] = new int[] { 158, 255, 84 },
-                    ["Dark Green"] = new int[] { 44, 94, 5 },
-                    ["Light Blue"] = new int[] { 65, 211, 244 },
-                    ["Dark Blue"] = new int[] { 24, 54, 163 },
-                    ["Purple"] = new int[] { 108, 24, 192 },
-                    ["Pink"] = new int[] { 192, 24, 172 },
-                    ["Black"] = new int[] { 1, 1, 1 }
+                    ["Rouge"] = new[] { 244, 65, 65 },
+                    ["Orange"] = new[] { 244, 167, 66 },
+                    ["Jaune"] = new[] { 244, 217, 65 },
+                    ["Or"] = new[] { 181, 120, 0 },
+                    ["Vert clair"] = new[] { 158, 255, 84 },
+                    ["Vert foncé"] = new[] { 44, 94, 5 },
+                    ["Bleu clair"] = new[] { 65, 211, 244 },
+                    ["Bleu foncé"] = new[] { 24, 54, 163 },
+                    ["Violet"] = new[] { 108, 24, 192 },
+                    ["Rose"] = new[] { 192, 24, 172 },
+                    ["Noir"] = new[] { 1, 1, 1 }
                 };
                 int smoker = 0, smokeg = 0, smokeb = 0;
                 GetVehicleTyreSmokeColor(veh.Handle, ref smoker, ref smokeg, ref smokeb);
@@ -1932,15 +1955,15 @@ namespace vMenuClient.menus
                     index = 0;
                 }
 
-                var tireSmoke = new MenuListItem("Tire Smoke Color", tireSmokes, index, $"Choose a ~y~tire smoke color~s~ for your vehicle.");
+                var tireSmoke = new MenuListItem("Couleur de la fumée des pneus", tireSmokes, index, $"Choisissez une ~y~couleur de fumée de pneu~s~ pour votre véhicule.");
                 VehicleModMenu.AddMenuItem(tireSmoke);
 
                 // Create the checkbox to enable/disable the tiresmoke.
-                var tireSmokeEnabled = new MenuCheckboxItem("Tire Smoke", "Enable or disable ~y~tire smoke~s~ for your vehicle. ~h~~r~Important:~s~ When disabling tire smoke, you'll need to drive around before it takes affect.", IsToggleModOn(veh.Handle, 20));
+                var tireSmokeEnabled = new MenuCheckboxItem("Fumée des pneus", "Activez ou désactivez la ~y~fumée des pneus~s~ pour votre véhicule. ~h~~r~Important:~s~ Lorsque vous désactivez la fumée des pneus, vous devrez conduire avant qu'elle ne prenne effet.", IsToggleModOn(veh.Handle, 20));
                 VehicleModMenu.AddMenuItem(tireSmokeEnabled);
 
                 // Create list for window tint
-                var windowTints = new List<string>() { "Stock [1/7]", "None [2/7]", "Limo [3/7]", "Light Smoke [4/7]", "Dark Smoke [5/7]", "Pure Black [6/7]", "Green [7/7]" };
+                var windowTints = new List<string>() { "Défaut [1/7]", "Aucun [2/7]", "Limo [3/7]", "Légèrement fumé [4/7]", "Fumé [5/7]", "Noir pure [6/7]", "Vert [7/7]" };
                 var currentTint = GetVehicleWindowTint(veh.Handle);
                 if (currentTint == -1)
                 {
@@ -1975,7 +1998,7 @@ namespace vMenuClient.menus
                         break;
                 }
 
-                var windowTint = new MenuListItem("Window Tint", windowTints, currentTint, "Apply tint to your windows.");
+                var windowTint = new MenuListItem("Teinte des fenêtres", windowTints, currentTint, "Appliquez de la teinte à vos fenêtres.");
                 VehicleModMenu.AddMenuItem(windowTint);
 
                 #endregion

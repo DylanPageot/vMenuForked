@@ -21,11 +21,18 @@ namespace vMenuClient
     public static class CommonFunctions
     {
         #region Variables
+
+        private static bool _isComing;
         private static string _currentScenario = "";
         private static Vehicle _previousVehicle;
 
+        private static readonly Random _rnd = new Random();
+
         internal static bool DriveToWpTaskActive = false;
         internal static bool DriveWanderTaskActive = false;
+
+        private static readonly float[][] _parkingSlot = new ParkingSlotHeading().GetHdgArray();
+
         #endregion
 
         #region some misc functions copied from base script
@@ -59,6 +66,21 @@ namespace vMenuClient
             await BaseScript.Delay(time);
         }
         #endregion
+
+        private static Vector3 GetRandomStreetAroundPlayer(int radius)
+        {
+            var coords = Game.PlayerPed.Position;
+            var x = coords.X + ToFloat(_rnd.Next(-radius, radius));
+            var y = coords.Y + ToFloat(_rnd.Next(-radius, radius));
+            var z = coords.Z;
+
+            var closestRoad = Vector3.Zero;
+            var zero = 0;
+            var zerof = 0f;
+            GetClosestRoad(x, y, z, 1.0f, 0, ref closestRoad, ref closestRoad, ref zero, ref zero, ref zerof,
+                false);
+            return closestRoad;
+        }
 
         #region menu position
         public static bool RightAlignMenus() => UserDefaults.MiscRightAlignMenu;
@@ -1218,16 +1240,143 @@ namespace vMenuClient
         /// <summary>
         /// Spawns a vehicle.
         /// </summary>
-        /// <param name="vehicleHash">Model hash of the vehicle to spawn.</param>
-        /// <param name="spawnInside">Teleports the player into the vehicle after spawning.</param>
-        /// <param name="replacePrevious">Replaces the previous vehicle of the player with the new one.</param>
-        /// <param name="skipLoad">Does not attempt to load the vehicle, but will spawn it right a way.</param>
-        /// <param name="vehicleInfo">All information needed for a saved vehicle to re-apply all mods.</param>
-        /// <param name="saveName">Used to get/set info about the saved vehicle data.</param>
-        public static async Task<int> SpawnVehicle(uint vehicleHash, bool spawnInside, bool replacePrevious, bool skipLoad, VehicleInfo vehicleInfo, string saveName = null, float x = 0f, float y = 0f, float z = 0f, float heading = -1f)
+        public static void DebugShipping()
         {
-            var speed = 0f;
-            var rpm = 0f;
+            _isComing = false;
+        }
+
+
+        public static async Task<int> SpawnVehicle(uint vehicleHash, bool spawnInside, bool replacePrevious,
+            bool skipLoad, VehicleInfo vehicleInfo, string saveName = null, float x = 0f, float y = 0f, float z = 0f,
+            float heading = -1f)
+        {
+
+            if (GetVehicleClassFromName(vehicleHash) != 14 && GetVehicleClassFromName(vehicleHash) != 15 &&
+                GetVehicleClassFromName(vehicleHash) != 15 && GetVehicleClassFromName(vehicleHash) != 16 &&
+                GetVehicleClassFromName(vehicleHash) != 21)
+            {
+
+                var nearestDistance = 9999f;
+                var nearestPoint = 0;
+                var posA = GetEntityCoords(Game.PlayerPed.Handle,true);
+
+                if (_isComing)
+                {
+                    ShowNotification("~r~Un véhicule est déjà en route... Patience...");
+                    return 0;
+                }
+
+                for (var o = 0; o < _parkingSlot.Length; o++)
+                {
+                    if (GetDistanceBetweenCoords(_parkingSlot[o][1], _parkingSlot[o][2], _parkingSlot[o][3], posA.X, posA.Y,
+                            posA.Z, true) < nearestDistance && IsPositionOccupied(_parkingSlot[o][1], _parkingSlot[o][2],
+                            _parkingSlot[o][3], 0.5f, false, true, false, false, false, 0, false) == false)
+                    {
+                        nearestDistance = GetDistanceBetweenCoords(_parkingSlot[o][1], _parkingSlot[o][2], _parkingSlot[o][3],
+                            posA.X, posA.Y, posA.Z, true);
+                        nearestPoint = o;
+                    }
+                }
+
+                if (_previousVehicle != null)
+                {
+                        _previousVehicle.PreviouslyOwnedByPlayer = false;
+                        SetEntityAsMissionEntity(_previousVehicle.Handle, true, true);
+                        _previousVehicle.Delete();
+                }
+                
+                RequestModel(vehicleHash);
+                while (!HasModelLoaded(vehicleHash))
+                    await BaseScript.Delay(50);
+
+                float xB;
+                float yB;
+                float zB;
+                var hB = 0f;
+                
+                if (nearestDistance < 200)
+                {
+                    xB = _parkingSlot[nearestPoint][1];
+                    yB = _parkingSlot[nearestPoint][2];
+                    zB = _parkingSlot[nearestPoint][3];
+                    hB = _parkingSlot[nearestPoint][4];
+                }
+                else
+                {
+                    var clsRoad = GetRandomStreetAroundPlayer(500);
+                    xB = clsRoad.X;
+                    yB = clsRoad.Y;
+                    zB = clsRoad.Z;
+                }
+                
+                Vehicle car = new Vehicle(CreateVehicle(vehicleHash, xB, yB, zB, hB, true, false));
+                _previousVehicle = car;
+                
+                SetEntityAsMissionEntity(car.GetHashCode(), true, true);
+                var carBlip = AddBlipForEntity(car.GetHashCode());
+                SetBlipSprite(carBlip, 56);
+                SetBlipColour(carBlip, 57);
+                SetBlipHiddenOnLegend(carBlip, true);
+                
+                if (saveName != null)
+                {
+                    ApplyVehicleModsDelayed(car, vehicleInfo, 500);
+                }
+                
+                if (nearestDistance < 200)
+        {
+                    ShowNotification("~g~Votre véhicule est prêt. Il vous attend sur la place de parking la plus proche !");
+                }
+                else
+                {
+                    ShowNotification("~o~Votre véhicule est en route ! Patience...");
+                    RequestModel((uint) PedHash.Xmech01SMY);
+                    while (!HasModelLoaded((uint) PedHash.Xmech01SMY))
+                        await BaseScript.Delay(50);
+                    
+                    var driver = CreatePedInsideVehicle(car.GetHashCode(), 4, (uint) PedHash.Xmech01SMY, -1, true, false);
+                    
+                    SetVehicleSiren(car.GetHashCode(),true);
+                    _isComing = true;
+                    
+                    SetVehicleHasBeenOwnedByPlayer(car.GetHashCode(),true);
+                    SetEntityAsMissionEntity(driver.GetHashCode(),true,true);
+                    SetEntityAsMissionEntity(car.GetHashCode(), true, true);
+
+                    while (GetDistanceBetweenCoords(GetEntityCoords(car.GetHashCode(), true).X, GetEntityCoords(car.GetHashCode(), true).Y, GetEntityCoords(car.GetHashCode(), true).Z, GetEntityCoords(Game.PlayerPed.Handle, true).X, GetEntityCoords(Game.PlayerPed.Handle, true).Y, GetEntityCoords(Game.PlayerPed.Handle, true).Z, true) > 25.0)
+                    {
+                        var plyCoords = GetEntityCoords(Game.PlayerPed.Handle, true);
+                        do
+                        {
+                            TaskVehicleDriveToCoordLongrange(driver.GetHashCode(),car.GetHashCode(),plyCoords.X,plyCoords.Y,plyCoords.Z,30.0f,828,15.0f);
+                            TaskGoToEntity(driver.GetHashCode(), GetPlayerPed(-1), -1, 15.0f, 30.0f, 0, 0);
+                            TaskVehicleMissionPedTarget(driver.GetHashCode(), car.GetHashCode(), GetPlayerPed(-1), 4, 30.0f, 828, 15.0f, 1.0f,false);
+                            await BaseScript.Delay(1);
+                        } while (car.Speed < 2.0);
+                        TaskVehicleDriveToCoordLongrange(driver.GetHashCode(),car.GetHashCode(),plyCoords.X,plyCoords.Y,plyCoords.Z,30.0f,828,15.0f);
+                        TaskGoToEntity(driver.GetHashCode(), GetPlayerPed(-1), -1, 15.0f, 30.0f, 0, 0);
+                        TaskVehicleMissionPedTarget(driver.GetHashCode(), car.GetHashCode(), GetPlayerPed(-1), 4, 30.0f, 828, 15.0f, 1.0f, false);
+                        await BaseScript.Delay(1000);
+                    }
+
+                    ClearPedTasks(driver);
+                    SetVehicleSiren(car.GetHashCode(),false);
+                    TaskLeaveVehicle(driver, car.GetHashCode(), 0);
+                    TaskWanderStandard(driver,10.0f,10);
+                    ShowNotification("~g~Votre véhicule est arrivé !");
+                    _isComing = false;
+                    await BaseScript.Delay(30000);
+                    SetPedAsNoLongerNeeded(ref driver);
+                    //DeletePed(ref driver);
+                }
+                
+                return car.Handle;
+            }
+
+            if ((vehicleHash != GetHashKey("kosatka") || IsAllowed(Permission.OPViewBannedPlayers)))
+            {
+                float speed = 0f;
+                float rpm = 0f;
             if (Game.PlayerPed.IsInVehicle())
             {
                 var tmpOldVehicle = GetVehicle();
@@ -1382,6 +1531,10 @@ namespace vMenuClient
 
             return vehicle.Handle;
         }
+
+            return 0;
+        }
+
 
         /// <summary>
         /// Waits for the given delay before applying the vehicle mods

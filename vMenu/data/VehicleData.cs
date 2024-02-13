@@ -418,6 +418,8 @@ namespace vMenuClient.data
             #region SUVs
             public static List<string> SUVs { get; } = new List<string>()
             {
+                "ASTRON",
+                "ASTRON2",
                 "ALEUTIAN", // CHOP SHOP (MP2023_02) DLC - Requires b3095
                 "ASTRON", // THE CONTRACT (MPSECURITY) DLC - Requires b2545
                 "BALLER",
@@ -492,6 +494,7 @@ namespace vMenuClient.data
             #region Muscle
             public static List<string> Muscle { get; } = new List<string>()
             {
+                "ARBITERGT",
                 "BLADE",
                 "BRIGHAM", // SA MERCENARIES (MP2023_01) DLC - Requires b2944
                 "BROADWAY", // DRUG WARS (MPCHRISTMAS3) DLC - Requires b2802
@@ -716,6 +719,7 @@ namespace vMenuClient.data
                 "REVOLTER",
                 "RT3000", // LS TUNERS (MPTUNER) DLC - Requires b2372
                 "RUSTON",
+                "S95",
                 "SCHAFTER2",
                 "SCHAFTER3",
                 "SCHAFTER4",
@@ -759,6 +763,7 @@ namespace vMenuClient.data
                 "CHAMPION", // THE CONTRACT (MPSECURITY) DLC - Requires b2545
                 "CHEETAH",
                 "CYCLONE",
+                "CYCLONE2",
                 "DEVESTE",
                 "EMERUS", // CASINO AND RESORT (MPVINEWOOD) DLC - Requires b2060
                 "ENTITYXF",
@@ -767,7 +772,8 @@ namespace vMenuClient.data
                 "FMJ",
                 "FURIA", // CASINO HEIST (MPHEIST3) DLC - Requires b2060
                 "GP1",
-                "IGNUS", // THE CONTRACT (MPSECURITY) DLC - Requires b2545
+                "IGNUS",
+                "IGNUS2",
                 "INFERNUS",
                 "ITALIGTB",
                 "ITALIGTB2",
@@ -911,6 +917,7 @@ namespace vMenuClient.data
                 "INSURGENT3",
                 "KALAHARI",
                 "KAMACHO",
+                "L35",
                 "MARSHALL",
                 "MENACER",
                 "MESA3",
@@ -1303,6 +1310,7 @@ namespace vMenuClient.data
                 "FREIGHT",
                 "FREIGHT2", // CHOP SHOP (MP2023_02) DLC - Requires b3095
                 "FREIGHTCAR",
+                "FREIGHTCAR2",
                 "FREIGHTCONT1",
                 "FREIGHTCONT2",
                 "FREIGHTGRAIN",

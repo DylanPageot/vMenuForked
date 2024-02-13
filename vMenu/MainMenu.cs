@@ -325,17 +325,7 @@ namespace vMenuClient
                 }
             }), false);
 
-            if (GetCurrentResourceName() != "vMenu")
-            {
-                MenuController.MainMenu = null;
-                MenuController.DontOpenAnyMenu = true;
-                MenuController.DisableMenuButtons = true;
-                throw new Exception("\n[vMenu] INSTALLATION ERROR!\nThe name of the resource is not valid. Please change the folder name from '" + GetCurrentResourceName() + "' to 'vMenu' (case sensitive)!\n");
-            }
-            else
-            {
                 Tick += OnTick;
-            }
 
             // Clear all previous pause menu info/brief messages on resource start.
             ClearBrief();

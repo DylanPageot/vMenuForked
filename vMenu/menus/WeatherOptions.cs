@@ -42,26 +42,26 @@ namespace vMenuClient.menus
             // Create the menu.
             menu = new Menu(Game.Player.Name, "Weather Options");
 
-            dynamicWeatherEnabled = new MenuCheckboxItem("Toggle Dynamic Weather", "Enable or disable dynamic weather changes.", EventManager.DynamicWeatherEnabled);
-            blackout = new MenuCheckboxItem("Toggle Blackout", "This disables or enables all lights across the map.", EventManager.IsBlackoutEnabled);
-            snowEnabled = new MenuCheckboxItem("Enable Snow Effects", "This will force snow to appear on the ground and enable snow particle effects for peds and vehicles. Combine with X-MAS or Light Snow weather for best results.", ConfigManager.GetSettingsBool(ConfigManager.Setting.vmenu_enable_snow));
-            var extrasunny = new MenuItem("Extra Sunny", "Set the weather to ~y~extra sunny~s~!") { ItemData = "EXTRASUNNY" };
-            var clear = new MenuItem("Clear", "Set the weather to ~y~clear~s~!") { ItemData = "CLEAR" };
-            var neutral = new MenuItem("Neutral", "Set the weather to ~y~neutral~s~!") { ItemData = "NEUTRAL" };
-            var smog = new MenuItem("Smog", "Set the weather to ~y~smog~s~!") { ItemData = "SMOG" };
-            var foggy = new MenuItem("Foggy", "Set the weather to ~y~foggy~s~!") { ItemData = "FOGGY" };
-            var clouds = new MenuItem("Cloudy", "Set the weather to ~y~clouds~s~!") { ItemData = "CLOUDS" };
-            var overcast = new MenuItem("Overcast", "Set the weather to ~y~overcast~s~!") { ItemData = "OVERCAST" };
-            var clearing = new MenuItem("Clearing", "Set the weather to ~y~clearing~s~!") { ItemData = "CLEARING" };
-            var rain = new MenuItem("Rainy", "Set the weather to ~y~rain~s~!") { ItemData = "RAIN" };
-            var thunder = new MenuItem("Thunder", "Set the weather to ~y~thunder~s~!") { ItemData = "THUNDER" };
-            var blizzard = new MenuItem("Blizzard", "Set the weather to ~y~blizzard~s~!") { ItemData = "BLIZZARD" };
-            var snow = new MenuItem("Snow", "Set the weather to ~y~snow~s~!") { ItemData = "SNOW" };
-            var snowlight = new MenuItem("Light Snow", "Set the weather to ~y~light snow~s~!") { ItemData = "SNOWLIGHT" };
-            var xmas = new MenuItem("X-MAS Snow", "Set the weather to ~y~x-mas~s~!") { ItemData = "XMAS" };
-            var halloween = new MenuItem("Halloween", "Set the weather to ~y~halloween~s~!") { ItemData = "HALLOWEEN" };
-            var removeclouds = new MenuItem("Remove All Clouds", "Remove all clouds from the sky!");
-            var randomizeclouds = new MenuItem("Randomize Clouds", "Add random clouds to the sky!");
+            dynamicWeatherEnabled = new MenuCheckboxItem("Activer la météo dynamique", "Activer ou désactiver les changements dynamique de météo.", EventManager.DynamicWeatherEnabled);
+            blackout = new MenuCheckboxItem("Activer le Blackout", "Cela active ou désactive toutes les lumières de la map.", EventManager.IsBlackoutEnabled);
+            snowEnabled = new MenuCheckboxItem("Activer la neige", "Cela force la neige à apparaître au sol et active les effets qui y sont dédiés.", ConfigManager.GetSettingsBool(ConfigManager.Setting.vmenu_enable_snow));
+            var extrasunny = new MenuItem("Grand Soleil", "Changer le temps pour ~y~Grand Soleil~s~!") { ItemData = "EXTRASUNNY" };
+            var clear = new MenuItem("Ciel dégagé", "Changer le temps pour ~y~Ciel dégagé~s~!") { ItemData = "CLEAR" };
+            var neutral = new MenuItem("Temps moyen", "Changer le temps pour ~y~Temps moyen~s~!") { ItemData = "NEUTRAL" };
+            var smog = new MenuItem("Brume", "Changer le temps pour ~y~Brume~s~!") { ItemData = "SMOG" };
+            var foggy = new MenuItem("Brouillard", "Changer le temps pour ~y~Brouillard~s~!") { ItemData = "FOGGY" };
+            var clouds = new MenuItem("Nuageux", "Changer le temps pour ~y~Nuageux~s~!") { ItemData = "CLOUDS" };
+            var overcast = new MenuItem("Très nuageux", "Changer le temps pour ~y~Très nuageux~s~!") { ItemData = "OVERCAST" };
+            var clearing = new MenuItem("Eclaircies", "Changer le temps pour ~y~Eclaircies~s~!") { ItemData = "CLEARING" };
+            var rain = new MenuItem("Pluie", "Changer le temps pour ~y~Pluie~s~!") { ItemData = "RAIN" };
+            var thunder = new MenuItem("Orage", "Changer le temps pour ~y~Orage~s~!") { ItemData = "THUNDER" };
+            var blizzard = new MenuItem("Blizzard", "Changer le temps pour ~y~Blizzard~s~!") { ItemData = "BLIZZARD" };
+            var snow = new MenuItem("Neige", "Changer le temps pour ~y~Neige~s~!") { ItemData = "SNOW" };
+            var snowlight = new MenuItem("Neige faible", "Changer le temps pour ~y~Neige faible~s~!") { ItemData = "SNOWLIGHT" };
+            var xmas = new MenuItem("Neige de Noël", "Changer le temps pour ~y~Neige de Noël~s~!") { ItemData = "XMAS" };
+            var halloween = new MenuItem("Halloween", "Changer le temps pour ~y~halloween~s~!") { ItemData = "HALLOWEEN" };
+            var removeclouds = new MenuItem("Retirer les nuages", "Supprimer tous les nuages du ciel");
+            var randomizeclouds = new MenuItem("Nuages aléatoires", "Ajouter des nuages de manière aléatoire");
 
             if (IsAllowed(Permission.WODynamic))
             {
@@ -112,7 +112,7 @@ namespace vMenuClient.menus
                 }
                 else if (item.ItemData is string weatherType)
                 {
-                    Notify.Custom($"The weather will be changed to ~y~{item.Text}~s~. This will take {EventManager.WeatherChangeTime} seconds.");
+                    Notify.Custom($"La météo va être changée pour : ~y~{item.Text}~s~. Cela prendra {EventManager.WeatherChangeTime} secondes.");
                     UpdateServerWeather(weatherType, EventManager.IsBlackoutEnabled, EventManager.DynamicWeatherEnabled, EventManager.IsSnowEnabled);
                 }
             };
@@ -121,17 +121,17 @@ namespace vMenuClient.menus
             {
                 if (item == dynamicWeatherEnabled)
                 {
-                    Notify.Custom($"Dynamic weather changes are now {(_checked ? "~g~enabled" : "~r~disabled")}~s~.");
+                    Notify.Custom($"La météo dynamique est maintenant {(_checked ? "~g~activée" : "~r~désactivée")}~s~.");
                     UpdateServerWeather(EventManager.GetServerWeather, EventManager.IsBlackoutEnabled, _checked, EventManager.IsSnowEnabled);
                 }
                 else if (item == blackout)
                 {
-                    Notify.Custom($"Blackout mode is now {(_checked ? "~g~enabled" : "~r~disabled")}~s~.");
+                    Notify.Custom($"Le mode Blackout est maintenant {(_checked ? "~g~activé" : "~r~désactivé")}~s~.");
                     UpdateServerWeather(EventManager.GetServerWeather, _checked, EventManager.DynamicWeatherEnabled, EventManager.IsSnowEnabled);
                 }
                 else if (item == snowEnabled)
                 {
-                    Notify.Custom($"Snow effects will now be forced {(_checked ? "~g~enabled" : "~r~disabled")}~s~.");
+                    Notify.Custom($"La neige forcé est maintenant {(_checked ? "~g~activée" : "~r~désactivée")}~s~.");
                     UpdateServerWeather(EventManager.GetServerWeather, EventManager.IsBlackoutEnabled, EventManager.DynamicWeatherEnabled, _checked);
                 }
             };

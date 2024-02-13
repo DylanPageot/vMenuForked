@@ -27,12 +27,12 @@ namespace vMenuClient.menus
         {
             #region initial setup.
             // Create the menu.
-            menu = new Menu(Game.Player.Name, "Vehicle Spawner");
+            menu = new Menu(Game.Player.Name, "Spawn de véhicule");
 
             // Create the buttons and checkboxes.
-            var spawnByName = new MenuItem("Spawn Vehicle By Model Name", "Enter the name of a vehicle to spawn.");
-            var spawnInVeh = new MenuCheckboxItem("Spawn Inside Vehicle", "This will teleport you into the vehicle when you spawn it.", SpawnInVehicle);
-            var replacePrev = new MenuCheckboxItem("Replace Previous Vehicle", "This will automatically delete your previously spawned vehicle when you spawn a new vehicle.", ReplaceVehicle);
+            var spawnByName = new MenuItem("Spawn un véhicule via son nom", "Entrer le nom d'un véhicule à faire spawn.");
+            var spawnInVeh = new MenuCheckboxItem("Apparaître à l'intérieur du véhicule", "Cela fonctionne uniquement pour les véhicules non terrestre.", SpawnInVehicle);
+            var replacePrev = new MenuCheckboxItem("Remplacer le dernier véhicule", "Cela fonctionne uniquement pour les véhicules non terrestre.", ReplaceVehicle);
 
             // Add the items to the menu.
             if (IsAllowed(Permission.VSSpawnByName))
@@ -45,8 +45,8 @@ namespace vMenuClient.menus
 
             #region addon cars menu
             // Vehicle Addons List
-            var addonCarsMenu = new Menu("Addon Vehicles", "Spawn An Addon Vehicle");
-            var addonCarsBtn = new MenuItem("Addon Vehicles", "A list of addon vehicles available on this server.") { Label = "→→→" };
+            var addonCarsMenu = new Menu("Véhicules moddés", "Faire apparaître un véhicule moddé");
+            var addonCarsBtn = new MenuItem("Véhicules moddés", "Une liste de tous les véhicules moddés présents sur le serveur.") { Label = "→→→" };
 
             menu.AddMenuItem(addonCarsBtn);
 
@@ -58,20 +58,20 @@ namespace vMenuClient.menus
                     {
                         MenuController.BindMenuItem(menu, addonCarsMenu, addonCarsBtn);
                         MenuController.AddSubmenu(menu, addonCarsMenu);
-                        var unavailableCars = new Menu("Addon Spawner", "Unavailable Vehicles");
+                        var unavailableCars = new Menu("Spawner - Véhicules moddés", "Véhicules indisponibles");
                         var unavailableCarsBtn = new MenuItem("Unavailable Vehicles", "These addon vehicles are not currently being streamed (correctly) and are not able to be spawned.") { Label = "→→→" };
                         MenuController.AddSubmenu(addonCarsMenu, unavailableCars);
 
                         for (var cat = 0; cat < 23; cat++)
                         {
-                            var categoryMenu = new Menu("Addon Spawner", GetLabelText($"VEH_CLASS_{cat}"));
-                            var categoryBtn = new MenuItem(GetLabelText($"VEH_CLASS_{cat}"), $"Spawn an addon vehicle from the {GetLabelText($"VEH_CLASS_{cat}")} class.") { Label = "→→→" };
+                            var categoryMenu = new Menu("Spawner - Véhicules moddés", GetLabelText($"VEH_CLASS_{cat}"));
+                            var categoryBtn = new MenuItem(GetLabelText($"VEH_CLASS_{cat}"), $"Faire apparaître un véhicule de classe : {GetLabelText($"VEH_CLASS_{cat}")}.") { Label = "→→→" };
 
                             addonCarsMenu.AddMenuItem(categoryBtn);
 
                             if (!allowedCategories[cat])
                             {
-                                categoryBtn.Description = "This vehicle class is disabled by the server.";
+                                categoryBtn.Description = "Cette classe de véhicule est désactivé sur le serveur.";
                                 categoryBtn.Enabled = false;
                                 categoryBtn.LeftIcon = MenuItem.Icon.LOCK;
                                 categoryBtn.Label = "";
@@ -86,7 +86,7 @@ namespace vMenuClient.menus
                                 var name = localizedName != "NULL" ? localizedName : GetDisplayNameFromVehicleModel(veh.Value);
                                 name = name != "CARNOTFOUND" ? name : veh.Key;
 
-                                var carBtn = new MenuItem(name, $"Click to spawn {name}.")
+                                var carBtn = new MenuItem(name, $"Cliquer pour faire apparaître {name}.")
                                 {
                                     Label = $"({veh.Key})",
                                     ItemData = veh.Key // store the model name in the button data.
@@ -100,7 +100,7 @@ namespace vMenuClient.menus
                                 else
                                 {
                                     carBtn.Enabled = false;
-                                    carBtn.Description = "This vehicle is not available. Please ask the server owner to check if the vehicle is being streamed correctly.";
+                                    carBtn.Description = "Ce véhicule n'est pas disponible. Merci de contacter l'équipe de modération.";
                                     carBtn.LeftIcon = MenuItem.Icon.LOCK;
                                     unavailableCars.AddMenuItem(carBtn);
                                 }
@@ -119,7 +119,7 @@ namespace vMenuClient.menus
                             }
                             else
                             {
-                                categoryBtn.Description = "There are no addon cars available in this category.";
+                                categoryBtn.Description = "Il n'y a aucun véhicule moddé disponible dans cette catégorie.";
                                 categoryBtn.Enabled = false;
                                 categoryBtn.LeftIcon = MenuItem.Icon.LOCK;
                                 categoryBtn.Label = "";
@@ -136,21 +136,21 @@ namespace vMenuClient.menus
                     {
                         addonCarsBtn.Enabled = false;
                         addonCarsBtn.LeftIcon = MenuItem.Icon.LOCK;
-                        addonCarsBtn.Description = "There are no addon vehicles available on this server.";
+                        addonCarsBtn.Description = "Il n'y a aucun véhicule moddé disponible sur le serveur.";
                     }
                 }
                 else
                 {
                     addonCarsBtn.Enabled = false;
                     addonCarsBtn.LeftIcon = MenuItem.Icon.LOCK;
-                    addonCarsBtn.Description = "The list containing all addon cars could not be loaded, is it configured properly?";
+                    addonCarsBtn.Description = "La liste des véhicules moddés ne peut être lues.";
                 }
             }
             else
             {
                 addonCarsBtn.Enabled = false;
                 addonCarsBtn.LeftIcon = MenuItem.Icon.LOCK;
-                addonCarsBtn.Description = "Access to this list has been restricted by the server owner.";
+                addonCarsBtn.Description = "L'accès à la liste des véhicules moddés est interdit sur le serveur.";
             }
             #endregion
 
@@ -268,12 +268,12 @@ namespace vMenuClient.menus
                 var className = GetLabelText($"VEH_CLASS_{vehClass}");
 
                 // Create a button & a menu for it, add the menu to the menu pool and add & bind the button to the menu.
-                var btn = new MenuItem(className, $"Spawn a vehicle from the ~o~{className} ~s~class.")
+                var btn = new MenuItem(className, $"Faire apparaître un véhicule de classe ~o~{className} ~s~.")
                 {
                     Label = "→→→"
                 };
 
-                var vehicleClassMenu = new Menu("Vehicle Spawner", className);
+                var vehicleClassMenu = new Menu("Véhicule Spawner", className);
 
                 MenuController.AddSubmenu(menu, vehicleClassMenu);
                 menu.AddMenuItem(btn);
@@ -285,7 +285,7 @@ namespace vMenuClient.menus
                 else
                 {
                     btn.LeftIcon = MenuItem.Icon.LOCK;
-                    btn.Description = "This category has been disabled by the server owner.";
+                    btn.Description = "Cette catégorie est désactivée sur le serveur.";
                     btn.Enabled = false;
                 }
 
@@ -347,7 +347,7 @@ namespace vMenuClient.menus
                             }
                             else
                             {
-                                var vehBtn = new MenuItem(vehName, "This vehicle is not available because the model could not be found in your game files. If this is a DLC vehicle, make sure the server is streaming it.")
+                                var vehBtn = new MenuItem(vehName, "Ce véhicule n'est pas disponible en raison d'un problème technique. Merci de contacter l'équipe du serveur.")
                                 {
                                     Enabled = false,
                                     Label = $"({vehModelName.ToLower()})",
@@ -378,7 +378,7 @@ namespace vMenuClient.menus
                         }
                         else
                         {
-                            var vehBtn = new MenuItem(vehName, "This vehicle is not available because the model could not be found in your game files. If this is a DLC vehicle, make sure the server is streaming it.")
+                            var vehBtn = new MenuItem(vehName, "Ce véhicule n'est pas disponible en raison d'un problème technique. Merci de contacter l'équipe du serveur.")
                             {
                                 Enabled = false,
                                 Label = $"({vehModelName.ToLower()})",

@@ -82,14 +82,14 @@ namespace vMenuClient.menus
         /// </summary>
         public void CreateMenu()
         {
-            menu = new Menu(Game.Player.Name, "weapon loadouts management");
+            menu = new Menu(Game.Player.Name, "Gestion des loadouts sauvegardés");
 
             MenuController.AddSubmenu(menu, SavedLoadoutsMenu);
             MenuController.AddSubmenu(SavedLoadoutsMenu, ManageLoadoutMenu);
 
-            var saveLoadout = new MenuItem("Save Loadout", "Save your current weapons into a new loadout slot.");
-            var savedLoadoutsMenuBtn = new MenuItem("Manage Loadouts", "Manage saved weapon loadouts.") { Label = "→→→" };
-            var enableDefaultLoadouts = new MenuCheckboxItem("Restore Default Loadout On Respawn", "If you've set a loadout as default loadout, then your loadout will be equipped automatically whenever you (re)spawn.", WeaponLoadoutsSetLoadoutOnRespawn);
+            var saveLoadout = new MenuItem("Sauvegarder loadout", "Sauvegarder vos armes dans un nouveau loadout vierge.");
+            var savedLoadoutsMenuBtn = new MenuItem("Gérer vos loadouts", "Gérer ses loadouts sauvegardés.") { Label = "→→→" };
+            var enableDefaultLoadouts = new MenuCheckboxItem("Restaurer le loadout par défaut", "Si vous avez indiqué un loadout comme étant celui par défaut, vous respawnerez automatiquement avec ce dernier.", WeaponLoadoutsSetLoadoutOnRespawn);
 
             menu.AddMenuItem(saveLoadout);
             menu.AddMenuItem(savedLoadoutsMenuBtn);
@@ -126,12 +126,12 @@ namespace vMenuClient.menus
             }
 
 
-            var spawnLoadout = new MenuItem("Equip Loadout", "Spawn this saved weapons loadout. This will remove all your current weapons and replace them with this saved slot.");
-            var renameLoadout = new MenuItem("Rename Loadout", "Rename this saved loadout.");
-            var cloneLoadout = new MenuItem("Clone Loadout", "Clones this saved loadout to a new slot.");
-            var setDefaultLoadout = new MenuItem("Set As Default Loadout", "Set this loadout to be your default loadout for whenever you (re)spawn. This will override the 'Restore Weapons' option inside the Misc Settings menu. You can toggle this option in the main Weapon Loadouts menu.");
-            var replaceLoadout = new MenuItem("~r~Replace Loadout", "~r~This replaces this saved slot with the weapons that you currently have in your inventory. This action can not be undone!");
-            var deleteLoadout = new MenuItem("~r~Delete Loadout", "~r~This will delete this saved loadout. This action can not be undone!");
+            var spawnLoadout = new MenuItem("Equiper loadout", "Cela vous permettra de vous équiper de ce loadout et supprimera vos armes actuelles.");
+            var renameLoadout = new MenuItem("Renommer loadout", "Renomme ce loadout déjà enregistré");
+            var cloneLoadout = new MenuItem("Dupliquer loadout", "Duplique ce loadout vers un nouveau slot vide.");
+            var setDefaultLoadout = new MenuItem("Définir par défaut", "Définis ce loadout comme étant celui par défaut.");
+            var replaceLoadout = new MenuItem("~r~Remplacer loadout", "~r~Cela remplacer le loadout par les armes que vous possédez actuellement. Ne peux être annulé !");
+            var deleteLoadout = new MenuItem("~r~Supprimer loadout", "~r~Cela supprimera totalement le loadout. Ne peux être annulé !");
 
             if (IsAllowed(Permission.WLEquip))
             {
@@ -165,7 +165,7 @@ namespace vMenuClient.menus
                             if (SaveWeaponLoadout("vmenu_string_saved_weapon_loadout_" + name))
                             {
                                 Log("saveweapons called from menu select (save loadout button)");
-                                Notify.Success($"Your weapons have been saved as ~g~<C>{name}</C>~s~.");
+                                Notify.Success($"Votre loadout a bien été sauvegardé comme : ~g~<C>{name}</C>~s~.");
                             }
                             else
                             {
@@ -189,7 +189,7 @@ namespace vMenuClient.menus
                     }
                     else if (item == renameLoadout || item == cloneLoadout) // rename or clone
                     {
-                        var newName = await GetUserInput("Enter a save name", SelectedSavedLoadoutName.Replace("vmenu_string_saved_weapon_loadout_", ""), 30);
+                        var newName = await GetUserInput("Entrer un nom", SelectedSavedLoadoutName.Replace("vmenu_string_saved_weapon_loadout_", ""), 30);
                         if (string.IsNullOrEmpty(newName))
                         {
                             Notify.Error(CommonErrors.InvalidInput);
@@ -203,7 +203,7 @@ namespace vMenuClient.menus
                             else
                             {
                                 SetResourceKvp("vmenu_string_saved_weapon_loadout_" + newName, JsonConvert.SerializeObject(weapons));
-                                Notify.Success($"Your weapons loadout has been {(item == renameLoadout ? "renamed" : "cloned")} to ~g~<C>{newName}</C>~s~.");
+                                Notify.Success($"Votre loadout a bien été {(item == renameLoadout ? "renommé" : "supprimé")} en  ~g~<C>{newName}</C>~s~.");
 
                                 if (item == renameLoadout)
                                 {
@@ -217,35 +217,35 @@ namespace vMenuClient.menus
                     else if (item == setDefaultLoadout) // set as default
                     {
                         SetResourceKvp("vmenu_string_default_loadout", SelectedSavedLoadoutName);
-                        Notify.Success("This is now your default loadout.");
+                        Notify.Success("Cela sera votre nouveau loadout par défaut.");
                         item.LeftIcon = MenuItem.Icon.TICK;
                     }
                     else if (item == replaceLoadout) // replace
                     {
-                        if (replaceLoadout.Label == "Are you sure?")
+                        if (replaceLoadout.Label == "Êtes vous sûrs ?")
                         {
                             replaceLoadout.Label = "";
                             SaveWeaponLoadout(SelectedSavedLoadoutName);
                             Log("save weapons called from replace loadout");
-                            Notify.Success("Your saved loadout has been replaced with your current weapons.");
+                            Notify.Success("Votre loadout a bien été remplacé par les armes que vous possédez actuellement.");
                         }
                         else
                         {
-                            replaceLoadout.Label = "Are you sure?";
+                            replaceLoadout.Label = "Êtes vous sûrs ?";
                         }
                     }
                     else if (item == deleteLoadout) // delete
                     {
-                        if (deleteLoadout.Label == "Are you sure?")
+                        if (deleteLoadout.Label == "Êtes vous sûrs ?")
                         {
                             deleteLoadout.Label = "";
                             DeleteResourceKvp(SelectedSavedLoadoutName);
                             ManageLoadoutMenu.GoBack();
-                            Notify.Success("Your saved loadout has been deleted.");
+                            Notify.Success("Votre ladout a bien été supprimé.");
                         }
                         else
                         {
-                            deleteLoadout.Label = "Are you sure?";
+                            deleteLoadout.Label = "Êtes vous sûrs ?";
                         }
                     }
                 }

@@ -1180,11 +1180,11 @@ namespace vMenuClient
                 {
                     if (dropReason == null)
                     {
-                        Notify.Custom($"~g~<C>{GetSafePlayerName(playerName)}</C>~s~ joined the server.");
+                        Notify.Custom($"~g~<C>{GetSafePlayerName(playerName)}</C>~s~ a rejoint le serveur.");
                     }
                     else
                     {
-                        Notify.Custom($"~r~<C>{GetSafePlayerName(playerName)}</C>~s~ left the server. ~c~({GetSafePlayerName(dropReason)})");
+                        Notify.Custom($"~r~<C>{GetSafePlayerName(playerName)}</C>~s~ a quitté le serveur.");
                     }
                 }
             }
@@ -1223,14 +1223,14 @@ namespace vMenuClient
                                         {
                                             if (playerKiller.Character.Handle == killer.Handle)
                                             {
-                                                Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~has been murdered by ~y~<C>{GetSafePlayerName(playerKiller.Name)}</C>~s~.");
+                                                Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~a été tué par ~y~<C>{GetSafePlayerName(playerKiller.Name)}</C>~s~.");
                                                 found = true;
                                                 break;
                                             }
                                         }
                                         if (!found)
                                         {
-                                            Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~has been murdered.");
+                                            Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~est mort.");
                                         }
                                     }
                                     else if (killer.Model.IsVehicle)
@@ -1242,7 +1242,7 @@ namespace vMenuClient
                                             {
                                                 if (playerKiller.Character.CurrentVehicle.Handle == killer.Handle)
                                                 {
-                                                    Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~has been murdered by ~y~<C>{GetSafePlayerName(playerKiller.Name)}</C>~s~.");
+                                                    Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~a été tué par ~y~<C>{GetSafePlayerName(playerKiller.Name)}</C>~s~.");
                                                     found = true;
                                                     break;
                                                 }
@@ -1250,27 +1250,27 @@ namespace vMenuClient
                                         }
                                         if (!found)
                                         {
-                                            Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~has been murdered.");
+                                            Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~est mort.");
                                         }
                                     }
                                     else
                                     {
-                                        Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~has been murdered.");
+                                        Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~est mort.");
                                     }
                                 }
                                 else
                                 {
-                                    Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~has been murdered.");
+                                    Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~est mort.");
                                 }
                             }
                             else
                             {
-                                Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~committed suicide.");
+                                Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~s'est suicidé.");
                             }
                         }
                         else
                         {
-                            Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~died.");
+                            Notify.Custom($"~o~<C>{GetSafePlayerName(p.Name)}</C> ~s~est mort.");
                         }
                         deadPlayers.Add(p.Handle);
                     }
@@ -1386,7 +1386,7 @@ namespace vMenuClient
                 var minutes = GetClockMinutes();
                 var hoursString = hours < 10 ? "0" + hours.ToString() : hours.ToString();
                 var minutesString = minutes < 10 ? "0" + minutes.ToString() : minutes.ToString();
-                MainMenu.TimeOptionsMenu.freezeTimeToggle.Label = $"(Current Time {hoursString}:{minutesString})";
+                MainMenu.TimeOptionsMenu.freezeTimeToggle.Label = $"(Heure actuelle {hoursString}:{minutesString})";
             }
             // This only needs to be updated once every 2 seconds so we can delay it.
             await Delay(2000);

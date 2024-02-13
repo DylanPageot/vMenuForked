@@ -10,19 +10,19 @@ namespace vMenuClient.menus
         private void CreateMenu()
         {
             // Create the menu.
-            menu = new Menu("vMenu", "About vMenu");
+            menu = new Menu("MadonneStudio", "A propos de MadonneStudio");
 
             // Create menu items.
-            var version = new MenuItem("vMenu Version", $"This server is using vMenu ~b~~h~{MainMenu.Version}~h~~s~.")
+            var version = new MenuItem("Version du serveur", "Ce serveur est développé et maintenu par MadonneStudio.")
             {
-                Label = $"~h~{MainMenu.Version}~h~"
+                Label = "2.0.0"
             };
-            var credits = new MenuItem("About vMenu / Credits", "vMenu is made by ~b~Vespura~s~. For more info, checkout ~b~www.vespura.com/vmenu~s~. Thank you to: Deltanic, Brigliar, IllusiveTea, Shayan Doust, zr0iq and Golden for your contributions!");
+            var credits = new MenuItem("A propos de MadonneStudio", "MadonneStudio est un studio de développement indépendant. Pour plus d'informations, visitez notre site : madonnestudio.com");
 
             var serverInfoMessage = vMenuShared.ConfigManager.GetSettingsString(vMenuShared.ConfigManager.Setting.vmenu_server_info_message);
             if (!string.IsNullOrEmpty(serverInfoMessage))
             {
-                var serverInfo = new MenuItem("Server Info", serverInfoMessage);
+                var serverInfo = new MenuItem("Site Internet", serverInfoMessage);
                 var siteUrl = vMenuShared.ConfigManager.GetSettingsString(vMenuShared.ConfigManager.Setting.vmenu_server_info_website_url);
                 if (!string.IsNullOrEmpty(siteUrl))
                 {

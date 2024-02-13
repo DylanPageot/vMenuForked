@@ -189,21 +189,7 @@ namespace vMenuServer
         public MainServer()
         {
             // name check
-            if (GetCurrentResourceName() != "vMenu")
-            {
-                var InvalidNameException = new Exception("\r\n\r\n^1[vMenu] INSTALLATION ERROR!\r\nThe name of the resource is not valid. " +
-                    "Please change the folder name from '^3" + GetCurrentResourceName() + "^1' to '^2vMenu^1' (case sensitive) instead!\r\n\r\n\r\n^7");
-                try
-                {
-                    throw InvalidNameException;
-                }
-                catch (Exception e)
-                {
-                    Debug.Write(e.Message);
-                }
-            }
-            else
-            {
+            
                 // Add event handlers.
                 EventHandlers.Add("vMenu:GetPlayerIdentifiers", new Action<int, NetworkCallbackDelegate>((TargetPlayer, CallbackFunction) =>
                 {
@@ -250,7 +236,6 @@ namespace vMenuServer
                 {
                     Tick += TimeLoop;
                 }
-            }
         }
         #endregion
 
