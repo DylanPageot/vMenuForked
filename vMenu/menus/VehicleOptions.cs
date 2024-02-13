@@ -1929,7 +1929,11 @@ namespace vMenuClient.menus
                 VehicleModMenu.AddMenuItem(headlightColor);
                 VehicleModMenu.AddMenuItem(turbo);
                 VehicleModMenu.AddMenuItem(bulletProofTires);
-                VehicleModMenu.AddMenuItem(lowGripTires);
+                if (IsAllowed(Permission.MSDriftMode))
+                {
+                    VehicleModMenu.AddMenuItem(lowGripTires);
+                }
+
                 // Create a list of tire smoke options.
                 var tireSmokes = new List<string>() { "Rouge", "Orange", "Jaune", "Or", "Vert clair", "Vert foncé", "Bleu clair", "Bleu foncé", "Violet", "Rose", "Noir" };
                 var tireSmokeColors = new Dictionary<string, int[]>()
