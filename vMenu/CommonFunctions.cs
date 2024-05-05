@@ -22,7 +22,7 @@ namespace vMenuClient
     {
         #region Variables
 
-        private static bool _isComing;
+        public static bool _isComing;
         private static string _currentScenario = "";
         private static Vehicle _previousVehicle;
 
@@ -34,7 +34,7 @@ namespace vMenuClient
         private static readonly float[][] _parkingSlot = new ParkingSlotHeading().GetHdgArray();
 
         #endregion
-
+        
         #region some misc functions copied from base script
         /// <summary>
         /// Copy of <see cref="BaseScript.TriggerServerEvent(string, object[])"/>

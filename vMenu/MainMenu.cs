@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using CitizenFX.Core;
+using CitizenFX.Core.Native;
 
 using MenuAPI;
 
@@ -199,13 +200,19 @@ namespace vMenuClient
                         Debug.Write(JsonConvert.SerializeObject(d, Formatting.Indented) + "\n");
                     }
                 }), false);
-
+                
                 RegisterCommand("clearfocus", new Action<dynamic, List<dynamic>, string>((dynamic source, List<dynamic> args, string rawCommand) =>
                 {
                     SetNuiFocus(false, false);
                 }), false);
             }
 
+            RegisterCommand("debugvcl",new Action<dynamic, List<dynamic>, string>((dynamic source, List<dynamic> args, string rawCommand) =>
+            {
+                API.ExecuteCommand("debugvcl2");
+                _isComing = false;
+            }),false);
+            
             RegisterCommand("vmenuclient", new Action<dynamic, List<dynamic>, string>((dynamic source, List<dynamic> args, string rawCommand) =>
             {
                 if (args != null)
