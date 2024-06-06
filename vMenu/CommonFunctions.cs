@@ -2865,17 +2865,20 @@ namespace vMenuClient
                         {
                             foreach (var wc in w.Components)
                             {
-                                if (DoesWeaponTakeWeaponComponent(w.Hash, wc.Value))
+                                if (wc.Key != "Chargeur grande capacité" && wc.Key != "Chargeur tambour")
                                 {
-                                    GiveWeaponComponentToPed(Game.PlayerPed.Handle, w.Hash, wc.Value);
-                                    var timer = GetGameTimer();
-                                    while (!HasPedGotWeaponComponent(Game.PlayerPed.Handle, w.Hash, wc.Value))
+                                    if (DoesWeaponTakeWeaponComponent(w.Hash, wc.Value))
                                     {
-                                        await Delay(0);
-                                        if (GetGameTimer() - timer > 1000)
+                                        GiveWeaponComponentToPed(Game.PlayerPed.Handle, w.Hash, wc.Value);
+                                        var timer = GetGameTimer();
+                                        while (!HasPedGotWeaponComponent(Game.PlayerPed.Handle, w.Hash, wc.Value))
                                         {
-                                            // took too long
-                                            break;
+                                            await Delay(0);
+                                            if (GetGameTimer() - timer > 1000)
+                                            {
+                                                // took too long
+                                                break;
+                                            }
                                         }
                                     }
                                 }

@@ -480,47 +480,57 @@ namespace vMenuClient.menus
                             foreach (var comp in weapon.Components)
                             {
                                 //Log($"{weapon.Name} : {comp.Key}");
-                                MenuItem compItem = new MenuItem(comp.Key, "Cliquez pour équiper ou non les accessoires de l'arme.");
-                                weaponComponents.Add(compItem, comp.Key);
-                                weaponMenu.AddMenuItem(compItem);
-
-                                #region Handle component button presses
-                                weaponMenu.OnItemSelect += (sender, item, index) =>
+                                if (comp.Key != "Chargeur tambour" && comp.Key != "Chargeur grande capacité")
                                 {
-                                    if (item == compItem)
-                                    {
-                                        var Weapon = weaponInfo[sender];
-                                        var componentHash = Weapon.Components[weaponComponents[item]];
-                                        if (HasPedGotWeapon(Game.PlayerPed.Handle, Weapon.Hash, false))
-                                        {
-                                            SetCurrentPedWeapon(Game.PlayerPed.Handle, Weapon.Hash, true);
-                                            if (HasPedGotWeaponComponent(Game.PlayerPed.Handle, Weapon.Hash, componentHash))
-                                            {
-                                                RemoveWeaponComponentFromPed(Game.PlayerPed.Handle, Weapon.Hash, componentHash);
+                                    MenuItem compItem = new MenuItem(comp.Key,
+                                        "Cliquez pour équiper ou non les accessoires de l'arme.");
+                                    weaponComponents.Add(compItem, comp.Key);
+                                    weaponMenu.AddMenuItem(compItem);
 
-                                                Subtitle.Custom("Accessoire retiré.");
+                                    #region Handle component button presses
+
+                                    weaponMenu.OnItemSelect += (sender, item, index) =>
+                                    {
+                                        if (item == compItem)
+                                        {
+                                            var Weapon = weaponInfo[sender];
+                                            var componentHash = Weapon.Components[weaponComponents[item]];
+                                            if (HasPedGotWeapon(Game.PlayerPed.Handle, Weapon.Hash, false))
+                                            {
+                                                SetCurrentPedWeapon(Game.PlayerPed.Handle, Weapon.Hash, true);
+                                                if (HasPedGotWeaponComponent(Game.PlayerPed.Handle, Weapon.Hash,
+                                                        componentHash))
+                                                {
+                                                    RemoveWeaponComponentFromPed(Game.PlayerPed.Handle, Weapon.Hash,
+                                                        componentHash);
+
+                                                    Subtitle.Custom("Accessoire retiré.");
+                                                }
+                                                else
+                                                {
+                                                    var ammo = GetAmmoInPedWeapon(Game.PlayerPed.Handle, Weapon.Hash);
+
+                                                    var clipAmmo = GetMaxAmmoInClip(Game.PlayerPed.Handle, Weapon.Hash,
+                                                        false);
+                                                    GetAmmoInClip(Game.PlayerPed.Handle, Weapon.Hash, ref clipAmmo);
+
+                                                    GiveWeaponComponentToPed(Game.PlayerPed.Handle, Weapon.Hash,
+                                                        componentHash);
+
+                                                    SetAmmoInClip(Game.PlayerPed.Handle, Weapon.Hash, clipAmmo);
+
+                                                    SetPedAmmo(Game.PlayerPed.Handle, Weapon.Hash, ammo);
+                                                    Subtitle.Custom("Accessoire équipé.");
+                                                }
                                             }
                                             else
                                             {
-                                                var ammo = GetAmmoInPedWeapon(Game.PlayerPed.Handle, Weapon.Hash);
-
-                                                var clipAmmo = GetMaxAmmoInClip(Game.PlayerPed.Handle, Weapon.Hash, false);
-                                                GetAmmoInClip(Game.PlayerPed.Handle, Weapon.Hash, ref clipAmmo);
-
-                                                GiveWeaponComponentToPed(Game.PlayerPed.Handle, Weapon.Hash, componentHash);
-
-                                                SetAmmoInClip(Game.PlayerPed.Handle, Weapon.Hash, clipAmmo);
-
-                                                SetPedAmmo(Game.PlayerPed.Handle, Weapon.Hash, ammo);
-                                                Subtitle.Custom("Accessoire équipé.");
+                                                Notify.Error("Vous devez être équipé de cette arme pour la modifier.");
                                             }
                                         }
-                                        else
-                                        {
-                                            Notify.Error("Vous devez être équipé de cette arme pour la modifier.");
-                                        }
-                                    }
-                                };
+                                    };
+                                }
+
                                 #endregion
                             }
                         }

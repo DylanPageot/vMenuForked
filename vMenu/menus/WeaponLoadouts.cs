@@ -19,7 +19,7 @@ namespace vMenuClient.menus
         // Variables
         private Menu menu = null;
         private readonly Menu SavedLoadoutsMenu = new("Saved Loadouts", "saved weapon loadouts list");
-        private readonly Menu ManageLoadoutMenu = new("Mange Loadout", "Manage saved weapon loadout");
+        private readonly Menu ManageLoadoutMenu = new("Manage Loadout", "Manage saved weapon loadout");
         public bool WeaponLoadoutsSetLoadoutOnRespawn { get; private set; } = UserDefaults.WeaponLoadoutsSetLoadoutOnRespawn;
 
         private readonly Dictionary<string, List<ValidWeapon>> SavedWeapons = new();
