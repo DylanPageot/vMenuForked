@@ -1840,48 +1840,48 @@ namespace vMenuClient.menus
 
                     // Get the proper localized mod type (suspension, armor, etc) name.
                     var typeName = mod.LocalizedModTypeName;
-
-                    if (veh.Model.GetHashCode().ToString() != GetHashKey("g6charger").ToString() ||
+                    
+                    if ((veh.Model.GetHashCode().ToString() != GetHashKey("g6charger").ToString() ||
                         (typeName != "Spoiler" && typeName != "Front Bumper" && typeName != "Rear Bumper" &&
                          typeName != "Skirt" && typeName != "Exhaust" && typeName != "Arceaux de sécurité" &&
-                         typeName != "Bonnet" && typeName != "Left Wing"))
+                         typeName != "Bonnet" && typeName != "Left Wing")) && typeName != "Finitions" && typeName != "Mine de proximité")
                     {
-                    // Create a list to all available upgrades for this modtype.
-                    var modlist = new List<string>();
+                        // Create a list to all available upgrades for this modtype.
+                        var modlist = new List<string>();
 
-                    // Get the current item index ({current}/{max upgrades})
-                    var currentItem = $"[1/{mod.ModCount + 1}]";
+                        // Get the current item index ({current}/{max upgrades})
+                        var currentItem = $"[1/{mod.ModCount + 1}]";
 
-                    // Add the stock value for this mod.
+                        // Add the stock value for this mod.
                         var name = $"{typeName} de série {currentItem}";
-                    modlist.Add(name);
-
-                    // Loop through all available upgrades for this specific mod type.
-                    for (var x = 0; x < mod.ModCount; x++)
-                    {
-                        // Create the item index.
-                        currentItem = $"[{2 + x}/{mod.ModCount + 1}]";
-
-                        // Create the name (again, converting to proper case), then add the name.
-                        name = mod.GetLocalizedModName(x) != "" ? $"{ToProperString(mod.GetLocalizedModName(x))} {currentItem}" : $"{typeName} #{x} {currentItem}";
                         modlist.Add(name);
-                    }
 
-                    // Create the MenuListItem for this mod type.
-                    var currIndex = GetVehicleMod(veh.Handle, (int)mod.ModType) + 1;
-                    var modTypeListItem = new MenuListItem(
-                        typeName,
-                        modlist,
-                        currIndex,
+                        // Loop through all available upgrades for this specific mod type.
+                        for (var x = 0; x < mod.ModCount; x++)
+                        {
+                            // Create the item index.
+                            currentItem = $"[{2 + x}/{mod.ModCount + 1}]";
+
+                            // Create the name (again, converting to proper case), then add the name.
+                            name = mod.GetLocalizedModName(x) != "" ? $"{ToProperString(mod.GetLocalizedModName(x))} {currentItem}" : $"{typeName} #{x} {currentItem}";
+                            modlist.Add(name);
+                        }
+
+                        // Create the MenuListItem for this mod type.
+                        var currIndex = GetVehicleMod(veh.Handle, (int)mod.ModType) + 1;
+                        var modTypeListItem = new MenuListItem(
+                            typeName,
+                            modlist,
+                            currIndex,
                             $"Choisir une amélioration de ~y~{typeName}~s~, il sera automatiquement appliqué à votre véhicule."
-                    )
-                    {
-                        ItemData = (int)mod.ModType
-                    };
+                        )
+                        {
+                             ItemData = (int)mod.ModType
+                        };
 
-                    // Add the list item to the menu.
-                    VehicleModMenu.AddMenuItem(modTypeListItem);
-                }
+                        // Add the list item to the menu.
+                        VehicleModMenu.AddMenuItem(modTypeListItem);
+                    }
                 }
 
                 #endregion
