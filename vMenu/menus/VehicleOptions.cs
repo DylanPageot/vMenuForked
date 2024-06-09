@@ -1844,7 +1844,8 @@ namespace vMenuClient.menus
                     if ((veh.Model.GetHashCode().ToString() != GetHashKey("g6charger").ToString() ||
                         (typeName != "Spoiler" && typeName != "Front Bumper" && typeName != "Rear Bumper" &&
                          typeName != "Skirt" && typeName != "Exhaust" && typeName != "Arceaux de sécurité" &&
-                         typeName != "Bonnet" && typeName != "Left Wing")) && typeName != "Finitions" && typeName != "Mine de proximité")
+                         typeName != "Bonnet" && typeName != "Left Wing")) && typeName != "Finitions" && typeName != "Mine de proximité" &&
+                        typeName != "Protections pour vitres" && typeName != "Armes secondaires" && typeName != "Blindage renforcé" && typeName != "Armes")
                     {
                         // Create a list to all available upgrades for this modtype.
                         var modlist = new List<string>();
