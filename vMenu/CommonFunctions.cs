@@ -1333,7 +1333,8 @@ namespace vMenuClient
                 SetBlipSprite(carBlip, 56);
                 SetBlipColour(carBlip, 57);
                 SetBlipHiddenOnLegend(carBlip, true);
-                SetVehicleFuelLevel(car.GetHashCode(),100.0f);
+                TriggerEvent("LegacyFuel:SetFuelToMaxLevel",car.GetHashCode());
+                SetVehicleFuelLevel(car.GetHashCode(),150.0f);
                 
                 if (saveName != null)
                 {
