@@ -285,18 +285,21 @@ namespace vMenuClient.menus
                                     }
                                     SetVehicleHalt(veh.Handle, 3f, 0, false);
                                     ClearPedTasks(Game.PlayerPed.Handle);
+                                    ResetDriveTask();
                                     Notify.Info("The player ped has stopped driving.");
                                 }
                             }
                         }
                         else
                         {
+                            ResetDriveTask();
                             ClearPedTasks(Game.PlayerPed.Handle);
                             Notify.Alert("Your ped is not in any vehicle.");
                         }
                     }
                     else if (item == forceStopDriving)
                     {
+                        ResetDriveTask();
                         ClearPedTasks(Game.PlayerPed.Handle);
                         Notify.Info("Driving task cancelled.");
                     }

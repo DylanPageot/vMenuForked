@@ -363,12 +363,55 @@ namespace vMenuClient
         /// <summary>
         /// Drives to waypoint
         /// </summary>
+        
+        private static async void DriveSpeed(int style = 0)
+        {
+            float defaultSpeed = 15.0f;
+            float actSpeed = defaultSpeed;
+            float lastSpeed = defaultSpeed;
+            await BaseScript.Delay(500);
+            while ((DriveWanderTaskActive || DriveToWpTaskActive) && style == 443)
+            {
+                await BaseScript.Delay(500);
+                var veh = GetVehicle();
+                actSpeed = GetMaxSpeedOfRoad(veh.GetHashCode());
+                SetDriverAbility(Game.PlayerPed.Handle, 1f);
+                SetDriverAggressiveness(Game.PlayerPed.Handle, 0f);
+                if (DriveWanderTaskActive && actSpeed != lastSpeed)
+                {
+                    lastSpeed = actSpeed;
+                    SetDriverAbility(Game.PlayerPed.Handle, 1f);
+                    SetDriverAggressiveness(Game.PlayerPed.Handle, 0f);
+                    TaskVehicleDriveWander(Game.PlayerPed.Handle, veh.Handle, actSpeed, style);
+                } else if (DriveToWpTaskActive && actSpeed != lastSpeed)
+                {
+                    lastSpeed = actSpeed;
+                    var waypoint = World.WaypointPosition;
+                    TaskVehicleDriveToCoordLongrange(Game.PlayerPed.Handle, veh.Handle, waypoint.X, waypoint.Y, waypoint.Z, GetMaxSpeedOfRoad(veh.GetHashCode()), style, 10f);
+                }
+
+                if (!IsPedInAnyVehicle(Game.PlayerPed.Handle, false))
+                {
+                    DriveWanderTaskActive = false;
+                    DriveToWpTaskActive = false;
+                    ClearPedTasks(Game.PlayerPed.Handle);
+                }
+            }
+        }
+
+        public static void ResetDriveTask()
+        {
+            DriveWanderTaskActive = false;
+            DriveToWpTaskActive = false;
+        }
+        
         public static void DriveToWp(int style = 0)
         {
 
             ClearPedTasks(Game.PlayerPed.Handle);
             DriveWanderTaskActive = false;
             DriveToWpTaskActive = true;
+            DriveSpeed(style);
 
             var waypoint = World.WaypointPosition;
 
@@ -389,7 +432,8 @@ namespace vMenuClient
             ClearPedTasks(Game.PlayerPed.Handle);
             DriveWanderTaskActive = true;
             DriveToWpTaskActive = false;
-
+            DriveSpeed(style);
+            
             var veh = GetVehicle();
             var model = (uint)veh.Model.Hash;
 
@@ -399,7 +443,485 @@ namespace vMenuClient
             TaskVehicleDriveWander(Game.PlayerPed.Handle, veh.Handle, GetVehicleModelMaxSpeed(model), style);
         }
         #endregion
+        
+        public static float GetMaxSpeedOfRoad(int vehicle)
+        {
+            var vclCoords = GetEntityCoords(vehicle, false);
+            uint StreetHash = 0;
+            uint CrossingRoad = 0;
+            GetStreetNameAtCoord(vclCoords.X,vclCoords.Y,vclCoords.Z,ref StreetHash,ref CrossingRoad);
+            var street = GetStreetNameFromHashKey(StreetHash);
+            int speedlimit = 15;
 
+            switch (street)
+            {
+                case "Joshua Road":
+                case "East Joshua Road":
+                    speedlimit = 50;
+                    break;
+                case "Marina Drive":
+                case "Alhambra Drive":
+                case "Niland Avenue":
+                case "Zancudo Avenue":
+                case "Armadillo Avenue":
+                case "Algonquin Blvd":
+                case "Mountain View Drive":
+                case "Cholla Springs Avenue":
+                    speedlimit = 35;
+                    break;
+                case "Panorama Drive":
+                    speedlimit = 40;
+                    break;
+                case "Lesbos Ln":
+                    speedlimit = 35;
+                    break;
+                case "Calafia Road":
+                case "North Calafia Way":
+                    speedlimit = 30;
+                    break;
+                case "Cassidy Trail":
+                    speedlimit = 25;
+                    break;
+                case "Seaview Road":
+                case "Grapeseed Main Street":
+                case "Grapeseed Avenue":
+                case "Joad Ln":
+                    speedlimit = 35;
+                    break;
+                case "Union Road":
+                    speedlimit = 40;
+                    break;
+                case "O'Neil Way":
+                    speedlimit = 25;
+                    break;
+                case "Señora Freeway":
+                    speedlimit = 65;
+                    break;
+                case "Catfish View":
+                    speedlimit = 35;
+                    break;
+                case "Great Ocean Hwy":
+                    speedlimit = 60;
+                    break;
+                case "Paleto Blvd":
+                case "Duluoz Avenue":
+                case "Procopio Drive":
+                    speedlimit = 35;
+                    break;
+                case "Cascabel Avenue":
+                    speedlimit = 30;
+                    break;
+                case "Procopio Promenade":
+                    speedlimit = 25;
+                    break;
+                case "Pyrite Avenue":
+                    speedlimit = 30;
+                    break;
+                case "Fort Zancudo Approach Road":
+                    speedlimit = 25;
+                    break;
+                case "Barbareno Road":
+                case "Ineseno Road":
+                    speedlimit = 30;
+                    break;
+                case "West Eclipse Blvd":
+                    speedlimit = 35;
+                    break;
+                case "Playa Vista":
+                case "Bay City Avenue":
+                    speedlimit = 30;
+                    break;
+                case "Del Perro Fwy":
+                    speedlimit = 65;
+                    break;
+                case "Equality Way":
+                case "Red Desert Avenue":
+                    speedlimit = 30;
+                    break;
+                case "Magellan Avenue":
+                    speedlimit = 25;
+                    break;
+                case "Sandcastle Way":
+                    speedlimit = 30;
+                    break;
+                case "Vespucci Blvd":
+                    speedlimit = 40;
+                    break;
+                case "Prosperity Street":
+                    speedlimit = 30;
+                    break;
+                case "San Andreas Avenue":
+                    speedlimit = 40;
+                    break;
+                case "North RockfoRoad Drive":
+                case "South Rockford Drive":
+                    speedlimit = 35;
+                    break;
+                case "Marathon Avenue":
+                    speedlimit = 30;
+                    break;
+                case "Boulevard Del Perro":
+                    speedlimit = 35;
+                    break;
+                case "Cougar Avenue":
+                case "Liberty Street":
+                    speedlimit = 30;
+                    break;
+                case "Bay City Incline":
+                    speedlimit = 40;
+                    break;
+                case "Conquistador Street":
+                case "Cortes Street":
+                case "Vitus Street":
+                case "Aguja Street":
+                case "Goma Street":
+                case "Melanoma Street":
+                    speedlimit = 25;
+                    break;
+                case "Palomino Avenue":
+                    speedlimit = 35;
+                    break;
+                case "Invention Ct":
+                case "Imagination Ct":
+                case "Rub Street":
+                case "Tug Street":
+                    speedlimit = 25;
+                    break;
+                case "Ginger Street":
+                case "Lindsay Circus":
+                    speedlimit = 30;
+                    break;
+                case "Calais Avenue":
+                    speedlimit = 35;
+                    break;
+                case "Adam's Apple Blvd":
+                case "Alta Street":
+                    speedlimit = 40;
+                    break;
+                case "Integrity Way":
+                case "Swiss Street":
+                    speedlimit = 30;
+                    break;
+                case "Strawberry Avenue":
+                    speedlimit = 40;
+                    break;
+                case "Capital Blvd":
+                case "Crusade Road":
+                    speedlimit = 30;
+                    break;
+                case "Innocence Blvd":
+                case "Davis Avenue":
+                    speedlimit = 40;
+                    break;
+                case "Little Bighorn Avenue":
+                case "Roy Lowenstein Blvd":
+                    speedlimit = 35;
+                    break;
+                case "Jamestown Street":
+                    speedlimit = 30;
+                    break;
+                case "Carson Avenue":
+                    speedlimit = 35;
+                    break;
+                case "Grove Street":
+                case "Brouge Avenue":
+                case "Covenant Avenue":
+                    speedlimit = 30;
+                    break;
+                case "Dutch London Street":
+                    speedlimit = 40;
+                    break;
+                case "Signal Street":
+                    speedlimit = 30;
+                    break;
+                case "Elysian Fields Fwy":
+                    speedlimit = 50;
+                    break;
+                case "Plaice Place":
+                    speedlimit = 30;
+                    break;
+                case "Chum Street":
+                    speedlimit = 40;
+                    break;
+                case "Chupacabra Street":
+                case "Miriam Turner Overpass":
+                    speedlimit = 30;
+                    break;
+                case "Autopia Pkwy":
+                case "Exceptionalists Way":
+                    speedlimit = 35;
+                    break;
+                case "La Puerta Fwy":
+                    speedlimit = 60;
+                    break;
+                case "New Empire Way":
+                case "Runway1":
+                    speedlimit = 30;
+                    break;
+                case "Greenwich Pkwy":
+                    speedlimit = 35;
+                    break;
+                case "Kortz Drive":
+                    speedlimit = 30;
+                    break;
+                case "Banham Canyon Drive":
+                case "Buen Vino Road":
+                    speedlimit = 40;
+                    break;
+                case "Route 68":
+                    speedlimit = 55;
+                    break;
+                case "Zancudo Grande Valley":
+                case "Zancudo Barranca":
+                case "Galileo Road":
+                case "Mt Vinewood Drive":
+                case "Marlowe Drive":
+                    speedlimit = 40;
+                    break;
+                case "Milton Road":
+                case "Kimble Hill Drive":
+                case "Normandy Drive":
+                case "Hillcrest Avenue":
+                case "Hillcrest Ridge Access Road":
+                case "North Sheldon Avenue":
+                case "Lake Vinewood Drive":
+                case "Lake Vinewood Est":
+                    speedlimit = 35;
+                    break;
+                case "Baytree Canyon Road":
+                    speedlimit = 40;
+                    break;
+                case "North Conker Avenue":
+                case "Wild Oats Drive":
+                case "Whispymound Drive":
+                case "Didion Drive":
+                case "Cox Way":
+                case "Picture Perfect Drive":
+                case "South Mo Milton Drive":
+                case "Cockingend Drive":
+                case "Mad Wayne Thunder Drive":
+                case "Hangman Avenue":
+                case "Dunstable Ln":
+                case "Dunstable Drive":
+                case "Greenwich Way":
+                case "Greenwich Place":
+                case "Hardy Way":
+                case "Richman Street":
+                case "Ace Jones Drive":
+                    speedlimit = 35;
+                    break;
+                case "Los Santos Freeway":
+                    speedlimit = 65;
+                    break;
+                case "Senora Road":
+                    speedlimit = 40;
+                    break;
+                case "Nowhere Road":
+                    speedlimit = 25;
+                    break;
+                case "Smoke Tree Road":
+                case "Cholla Road":
+                case "Cat-Claw Avenue":
+                    speedlimit = 35;
+                    break;
+                case "Senora Way":
+                    speedlimit = 40;
+                    break;
+                case "Palomino Fwy":
+                    speedlimit = 60;
+                    break;
+                case "Shank Street":
+                    speedlimit = 25;
+                    break;
+                case "Macdonald Street":
+                    speedlimit = 35;
+                    break;
+                case "Route 68 Approach":
+                    speedlimit = 55;
+                    break;
+                case "Vinewood Park Drive":
+                    speedlimit = 35;
+                    break;
+                case "Vinewood Blvd":
+                    speedlimit = 40;
+                    break;
+                case "Mirror Park Blvd":
+                case "Glory Way":
+                case "Bridge Street":
+                case "West Mirror Drive":
+                case "Nikola Avenue":
+                case "East Mirror Drive":
+                    speedlimit = 35;
+                    break;
+                case "Nikola Place":
+                    speedlimit = 25;
+                    break;
+                case "Mirror Place":
+                    speedlimit = 35;
+                    break;
+                case "El Rancho Blvd":
+                    speedlimit = 40;
+                    break;
+                case "Olympic Fwy":
+                    speedlimit = 60;
+                    break;
+                case "Fudge Ln":
+                case "Amarillo Vista":
+                    speedlimit = 25;
+                    break;
+                case "Labor Place":
+                case "El Burro Blvd":
+                    speedlimit = 35;
+                    break;
+                case "Sustancia Road":
+                    speedlimit = 45;
+                    break;
+                case "South Shambles Street":
+                case "Hanger Way":
+                case "Orchardville Avenue":
+                    speedlimit = 30;
+                    break;
+                case "Popular Street":
+                    speedlimit = 40;
+                    break;
+                case "Buccaneer Way":
+                    speedlimit = 45;
+                    break;
+                case "Abattoir Avenue":
+                    speedlimit = 35;
+                    break;
+                case "Voodoo Place":
+                    speedlimit = 30;
+                    break;
+                case "Mutiny Road":
+                case "South Arsenal Street":
+                case "Forum Drive":
+                case "Morningwood Blvd":
+                    speedlimit = 35;
+                    break;
+                case "Dorset Drive":
+                    speedlimit = 40;
+                    break;
+                case "Caesars Place":
+                    speedlimit = 25;
+                    break;
+                case "Spanish Avenue":
+                case "Portola Drive":
+                    speedlimit = 30;
+                    break;
+                case "Edwood Way":
+                    speedlimit = 25;
+                    break;
+                case "San Vitus Blvd":
+                    speedlimit = 40;
+                    break;
+                case "Eclipse Blvd":
+                    speedlimit = 35;
+                    break;
+                case "Gentry Lane":
+                    speedlimit = 30;
+                    break;
+                case "Las Lagunas Blvd":
+                case "Power Street":
+                case "Mt Haan Road":
+                case "Elgin Avenue":
+                    speedlimit = 40;
+                    break;
+                case "Hawick Avenue":
+                    speedlimit = 35;
+                    break;
+                case "Meteor Street":
+                case "Alta Place":
+                    speedlimit = 30;
+                    break;
+                case "Occupation Avenue":
+                    speedlimit = 35;
+                    break;
+                case "Carcer Way":
+                    speedlimit = 40;
+                    break;
+                case "Eastbourne Way":
+                    speedlimit = 30;
+                    break;
+                case "Rockford Drive":
+                case "Abe Milton Pkwy":
+                    speedlimit = 35;
+                    break;
+                case "Laguna Place":
+                case "Sinners Passage":
+                case "Atlee Street":
+                case "Sinner Street":
+                case "Supply Street":
+                    speedlimit = 30;
+                    break;
+                case "Amarillo Way":
+                case "Tower Way":
+                case "Decker Street":
+                    speedlimit = 35;
+                    break;
+                case "Tackle Street":
+                    speedlimit = 25;
+                    break;
+                case "Low Power Street":
+                case "Clinton Avenue":
+                case "Fenwell Place":
+                    speedlimit = 35;
+                    break;
+                case "Utopia Gardens":
+                    speedlimit = 25;
+                    break;
+                case "Cavalry Blvd":
+                case "South Boulevard Del Perro":
+                    speedlimit = 35;
+                    break;
+                case "Americano Way":
+                case "Sam Austin Drive":
+                    speedlimit = 25;
+                    break;
+                case "East Galileo Avenue":
+                case "Galileo Park":
+                case "West Galileo Avenue":
+                    speedlimit = 35;
+                    break;
+                case "Tongva Drive":
+                    speedlimit = 40;
+                    break;
+                case "Zancudo Road":
+                case "Movie Star Way":
+                case "Heritage Way":
+                    speedlimit = 35;
+                    break;
+                case "Perth Street":
+                    speedlimit = 25;
+                    break;
+                case "Chianski Passage":
+                    speedlimit = 30;
+                    break;
+                case "Lolita Avenue":
+                case "Meringue Ln":
+                    speedlimit = 35;
+                    break;
+                case "Strangeways Drive":
+                    speedlimit = 30;
+                    break;
+                case "Mt Haan Drive":
+                    speedlimit = 35;
+                    break;
+                case "Peaceful Street":
+                case "Steele Way":
+                case "York Street":
+                case "Tangerine Street":
+                case "Dorset Place":
+                    speedlimit = 25;
+                    break;
+                default:
+                    speedlimit = 40;
+                    break;
+            }
+
+            return (float) (speedlimit / 2.236936);
+        }
+        
         #region Quit session & Quit game
         /// <summary>
         /// Quit the current network session, but leaves you connected to the server so addons/resources are still streamed.
@@ -496,7 +1018,7 @@ namespace vMenuClient
                                 TaskWarpPedIntoVehicle(Game.PlayerPed.Handle, vehicle.Handle, (int)VehicleSeat.Any);
                                 Notify.Success("Teleported into ~g~<C>" + GetPlayerName(playerId) + "</C>'s ~s~vehicle.");
                             }
-                            // If there are not enough empty vehicle seats or the vehicle doesn't exist/is dead then notify the user.
+                            // If there are not enough empty vehicle seats or the vehicle doesn't exist/is dead) the notify the user.
                             else
                             {
                                 // If there's only one seat on this vehicle, tell them that it's a one-seater.
