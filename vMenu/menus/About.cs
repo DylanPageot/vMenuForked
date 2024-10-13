@@ -15,7 +15,7 @@ namespace vMenuClient.menus
             // Create menu items.
             var version = new MenuItem("Version du serveur", "Ce serveur est développé et maintenu par MadonneStudio.")
             {
-                Label = "2.1.14"
+                Label = "2.3.0"
             };
             var credits = new MenuItem("A propos de MadonneStudio", "MadonneStudio est un studio de développement indépendant. Pour plus d'informations, visitez notre site : madonnestudio.com");
 
