@@ -1845,7 +1845,7 @@ namespace vMenuClient.menus
                         (typeName != "Spoiler" && typeName != "Front Bumper" && typeName != "Rear Bumper" &&
                          typeName != "Skirt" && typeName != "Exhaust" && typeName != "Arceaux de sécurité" &&
                          typeName != "Bonnet" && typeName != "Left Wing")) && typeName != "Finitions" && typeName != "Mine de proximité" &&
-                        typeName != "Protections pour vitres" && typeName != "Armes secondaires" && typeName != "Blindage renforcé" && typeName != "Armes")
+                        typeName != "Protections pour vitres" && typeName != "Armes secondaires" && typeName != "Blindage renforcé" && typeName != "Armes" && (typeName != "Blindage renforcé" || veh.Model.GetHashCode().ToString() != GetHashKey("policet3").ToString())) 
                     {
                         // Create a list to all available upgrades for this modtype.
                         var modlist = new List<string>();
