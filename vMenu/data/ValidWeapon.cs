@@ -262,6 +262,8 @@ namespace vMenuClient.data
             // MP2023_02 DLC (V 3095)
             { "weapon_battlerifle", GetLabelText("WTD_BATTLERIFLE") },
             { "weapon_snowlauncher", GetLabelText("WTD_SNOWLNCHR") },
+            // CUSTOM
+            { "weapon_beanbag", "Beanbag"},
         };
 
         public static readonly Dictionary<string, string> weaponNames = new()
@@ -383,6 +385,8 @@ namespace vMenuClient.data
             { "weapon_battlerifle", GetLabelText("WT_BATTLERIFLE") },
             { "weapon_snowlauncher", GetLabelText("WT_SNOWLNCHR") },
             { "weapon_hackingdevice", GetLabelText("WT_HACKDEVICE") },
+            // CUSTOM
+            { "weapon_beanbag", "Beanbag"},
         };
         #endregion
 
@@ -506,6 +510,8 @@ namespace vMenuClient.data
             ["weapon_battlerifle"] = Permission.WPBattleRifle,
             ["weapon_snowlauncher"] = Permission.WPSnowLauncher,
             ["weapon_hackingdevice"] = Permission.WPHackingDevice,
+            // CUSTOMS
+            ["weapon_beanbag"] = Permission.WPBeanBag,
         };
         #endregion
 
