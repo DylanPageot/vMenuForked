@@ -325,6 +325,7 @@ namespace vMenuShared
             WPHackingDevice,
             // CUSTOM
             WPBeanBag,
+            WPM6IC,
             #endregion
 
             // Weapon Loadouts Menu

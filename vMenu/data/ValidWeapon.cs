@@ -387,6 +387,7 @@ namespace vMenuClient.data
             { "weapon_hackingdevice", GetLabelText("WT_HACKDEVICE") },
             // CUSTOM
             { "weapon_beanbag", "Beanbag"},
+            { "weapon_m6ic", "M6IC"},
         };
         #endregion
 
@@ -512,6 +513,7 @@ namespace vMenuClient.data
             ["weapon_hackingdevice"] = Permission.WPHackingDevice,
             // CUSTOMS
             ["weapon_beanbag"] = Permission.WPBeanBag,
+            ["weapon_m6ic"] = Permission.WPM6IC,
         };
         #endregion
 
@@ -935,6 +937,8 @@ namespace vMenuClient.data
             ["COMPONENT_COMBATPISTOL_VARMOD_XMAS23"] = GetLabelText("WCT_COMPIST_XM"),
             ["COMPONENT_SPECIALCARBINE_VARMOD_XMAS23"] = GetLabelText("WCT_SPCR_XM"),
             ["COMPONENT_HEAVYSNIPER_VARMOD_XMAS23"] = GetLabelText("WCT_HVSP_XM"),
+            // CUSTOM
+            ["COMPONENT_M6IC_FLSH_02"] = "Lampe torche"
         };
         #endregion
 
