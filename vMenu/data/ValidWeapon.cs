@@ -265,6 +265,8 @@ namespace vMenuClient.data
             // CUSTOM
             { "weapon_beanbag", "Beanbag"},
             { "weapon_m6ic", "M6IC"},
+            { "weapon_axmc", "AI AXMC"},
+            { "weapon_mp7", "HK MP7"},
         };
 
         public static readonly Dictionary<string, string> weaponNames = new()
@@ -389,6 +391,8 @@ namespace vMenuClient.data
             // CUSTOM
             { "weapon_beanbag", "Beanbag"},
             { "weapon_m6ic", "M6IC"},
+            { "weapon_axmc", "AI AXMC"},
+            { "weapon_mp7", "HK MP7"},
         };
         #endregion
 
@@ -515,6 +519,8 @@ namespace vMenuClient.data
             // CUSTOMS
             ["weapon_beanbag"] = Permission.WPBeanBag,
             ["weapon_m6ic"] = Permission.WPM6IC,
+            ["weapon_axmc"] = Permission.WPAXMC,
+            ["weapon_mp7"] = Permission.WPMP7,
         };
         #endregion
 
@@ -960,7 +966,15 @@ namespace vMenuClient.data
             ["COMPONENT_M6IC_STOCK_05"] = "Crosse Tactique Noire", 
             ["COMPONENT_M6IC_STOCK_06"] = "Crosse Tactique Tan",
             ["COMPONENT_M6IC_SUPP_01"] = "Silencieux Noire",
-            ["COMPONENT_M6IC_SUPP_02"] = "Silencieux Tan"
+            ["COMPONENT_M6IC_SUPP_02"] = "Silencieux Tan",
+            ["COMPONENT_AT_SCOPE_LARGEAMX"] = "Viseur Améliorer",
+            ["COMPONENT_AT_AR_SUPPAMX"] = "Silencieux",
+            ["COMPONENT_SNIPERRIFLEAMX_CLIP_01"] = "Chargeur Standard",
+            ["COMPONENT_AT_SCOPE_MACROMP7"]  = "Silencieux",
+            ["COMPONENT_AT_PI_FLSHMP7"] = "Lampe Torche",
+            ["COMPONENT_AT_SCOPE_MACROMP7"] = "Aimpoint Micro T-1",
+            ["COMPONENT_AT_SCOPE_MP7MACRO"] = "Eothech",
+            ["COMPONENT_MP7_CLIP_01"] = "Chargeur Standard",
         };
         #endregion
 
