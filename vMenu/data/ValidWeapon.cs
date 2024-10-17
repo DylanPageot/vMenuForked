@@ -265,6 +265,7 @@ namespace vMenuClient.data
             // CUSTOM
             { "weapon_beanbag", "Beanbag"},
             { "weapon_m6ic", "M6IC"},
+            { "weapon_megaphone", "Mégaphone"}
         };
 
         public static readonly Dictionary<string, string> weaponNames = new()
@@ -389,6 +390,7 @@ namespace vMenuClient.data
             // CUSTOM
             { "weapon_beanbag", "Beanbag"},
             { "weapon_m6ic", "M6IC"},
+            { "weapon_megaphone", "Mégaphone"}
         };
         #endregion
 
@@ -515,6 +517,7 @@ namespace vMenuClient.data
             // CUSTOMS
             ["weapon_beanbag"] = Permission.WPBeanBag,
             ["weapon_m6ic"] = Permission.WPM6IC,
+            ["weapon_megaphone"] = Permission.WPMegaphone
         };
         #endregion
 

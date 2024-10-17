@@ -326,6 +326,7 @@ namespace vMenuShared
             // CUSTOM
             WPBeanBag,
             WPM6IC,
+            WPMegaphone,
             #endregion
 
             // Weapon Loadouts Menu
