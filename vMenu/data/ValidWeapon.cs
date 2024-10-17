@@ -264,6 +264,7 @@ namespace vMenuClient.data
             { "weapon_snowlauncher", GetLabelText("WTD_SNOWLNCHR") },
             // CUSTOM
             { "weapon_beanbag", "Beanbag"},
+            { "weapon_m6ic", "M6IC"},
         };
 
         public static readonly Dictionary<string, string> weaponNames = new()
@@ -938,7 +939,28 @@ namespace vMenuClient.data
             ["COMPONENT_SPECIALCARBINE_VARMOD_XMAS23"] = GetLabelText("WCT_SPCR_XM"),
             ["COMPONENT_HEAVYSNIPER_VARMOD_XMAS23"] = GetLabelText("WCT_HVSP_XM"),
             // CUSTOM
-            ["COMPONENT_M6IC_FLSH_02"] = "Lampe torche"
+            ["COMPONENT_FMLITESCOPE_03"] = "Micro T1 Aimpoint",
+            ["COMPONENT_FMLITESCOPE_01"] = "Trijicon ACOG",
+            ["COMPONENT_FMLITESCOPE_02"] = "Aimpoint M4",
+            ["COMPONENT_FMLITESCOPE_04"] = "Leupold LCO",
+            ["COMPONENT_FMLITESCOPE_06"] = "Eotech Noire",
+            ["COMPONENT_FMLITESCOPE_07"] = "Eotech Tan",
+            ["COMPONENT_FMLITESCOPE_08"] = "Eotech + G33 Noire",
+            ["COMPONENT_FMLITESCOPE_010"] = "Eotech + G33 Tan",
+            ["COMPONENT_FMLITESCOPE_012"] = "SOW FoV-S7",            
+            ["COMPONENT_M6IC_FLSH_02"] = "Lampe Torche",
+            ["COMPONENT_M6IC_CLIP_01"] = "Chargeur PMAG M3 Noire",
+            ["COMPONENT_M6IC_CLIP_02"] = "Chargeur PMAG M3 Tan",
+            ["COMPONENT_M6IC_CLIP_05"] = "Chargeur PMAG M4 Noire",
+            ["COMPONENT_M6IC_CLIP_06"] = "Chargeur PMAG M4 Tan",
+            ["COMPONENT_M6IC_STOCK_01"] = "Crosse classique Noire",
+            ["COMPONENT_M6IC_STOCK_02"] = "Crosse classique Tan",
+            ["COMPONENT_M6IC_STOCK_03"] = "Crosse ergonomique Noire",   
+            ["COMPONENT_M6IC_STOCK_04"] = "Crosse ergonomique Tan",
+            ["COMPONENT_M6IC_STOCK_05"] = "Crosse Tactique Noire", 
+            ["COMPONENT_M6IC_STOCK_06"] = "Crosse Tactique Tan",
+            ["COMPONENT_M6IC_SUPP_01"] = "Silencieux Noire",
+            ["COMPONENT_M6IC_SUPP_02"] = "Silencieux Tan"
         };
         #endregion
 
