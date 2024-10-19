@@ -267,6 +267,7 @@ namespace vMenuClient.data
             { "weapon_m6ic", "M6IC"},
             { "weapon_axmc", "AI AXMC"},
             { "weapon_mp7", "HK MP7"},
+            { "weapon_megaphone", "Mégaphone"}
         };
 
         public static readonly Dictionary<string, string> weaponNames = new()
@@ -393,6 +394,7 @@ namespace vMenuClient.data
             { "weapon_m6ic", "M6IC"},
             { "weapon_axmc", "AI AXMC"},
             { "weapon_mp7", "HK MP7"},
+            { "weapon_megaphone", "Mégaphone"}
         };
         #endregion
 
@@ -521,6 +523,7 @@ namespace vMenuClient.data
             ["weapon_m6ic"] = Permission.WPM6IC,
             ["weapon_axmc"] = Permission.WPAXMC,
             ["weapon_mp7"] = Permission.WPMP7,
+            ["weapon_megaphone"] = Permission.WPMegaphone
         };
         #endregion
 

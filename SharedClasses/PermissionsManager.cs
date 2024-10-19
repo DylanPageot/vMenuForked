@@ -328,6 +328,7 @@ namespace vMenuShared
             WPM6IC,
             WPAXMC,
             WPMP7,
+            WPMegaphone,
             #endregion
 
             // Weapon Loadouts Menu
