@@ -1888,14 +1888,14 @@ namespace vMenuClient
                         var plyCoords = GetEntityCoords(Game.PlayerPed.Handle, true);
                         do
                         {
-                            TaskVehicleDriveToCoordLongrange(driver.GetHashCode(),car.GetHashCode(),plyCoords.X,plyCoords.Y,plyCoords.Z,30.0f,828,15.0f);
-                            TaskGoToEntity(driver.GetHashCode(), GetPlayerPed(-1), -1, 15.0f, 30.0f, 0, 0);
-                            TaskVehicleMissionPedTarget(driver.GetHashCode(), car.GetHashCode(), GetPlayerPed(-1), 4, 30.0f, 828, 15.0f, 1.0f,false);
+                            TaskVehicleDriveToCoordLongrange(driver.GetHashCode(),car.GetHashCode(),plyCoords.X,plyCoords.Y,plyCoords.Z,25.0f,814,15.0f);
+                            TaskGoToEntity(driver.GetHashCode(), GetPlayerPed(-1), -1, 15.0f, 25.0f, 0, 0);
+                            TaskVehicleMissionPedTarget(driver.GetHashCode(), car.GetHashCode(), GetPlayerPed(-1), 4, 25.0f, 814, 15.0f, 1.0f,false);
                             await BaseScript.Delay(1);
                         } while (car.Speed < 2.0);
-                        TaskVehicleDriveToCoordLongrange(driver.GetHashCode(),car.GetHashCode(),plyCoords.X,plyCoords.Y,plyCoords.Z,30.0f,828,15.0f);
-                        TaskGoToEntity(driver.GetHashCode(), GetPlayerPed(-1), -1, 15.0f, 30.0f, 0, 0);
-                        TaskVehicleMissionPedTarget(driver.GetHashCode(), car.GetHashCode(), GetPlayerPed(-1), 4, 30.0f, 828, 15.0f, 1.0f, false);
+                        TaskVehicleDriveToCoordLongrange(driver.GetHashCode(),car.GetHashCode(),plyCoords.X,plyCoords.Y,plyCoords.Z,25.0f,814,15.0f);
+                        TaskGoToEntity(driver.GetHashCode(), GetPlayerPed(-1), -1, 15.0f, 25.0f, 0, 0);
+                        TaskVehicleMissionPedTarget(driver.GetHashCode(), car.GetHashCode(), GetPlayerPed(-1), 4, 25.0f, 814, 15.0f, 1.0f, false);
                         await BaseScript.Delay(1000);
                     }
 
@@ -2884,8 +2884,8 @@ namespace vMenuClient
                 // Reset some stuff.
                 SetPedDefaultComponentVariation(Game.PlayerPed.Handle);
                 ClearAllPedProps(Game.PlayerPed.Handle);
-                ClearPedDecorations(Game.PlayerPed.Handle);
-                ClearPedFacialDecorations(Game.PlayerPed.Handle);
+                //ClearPedDecorations(Game.PlayerPed.Handle);
+                //ClearPedFacialDecorations(Game.PlayerPed.Handle);
 
                 if (pedCustomizationOptions.version == 1)
                 {
