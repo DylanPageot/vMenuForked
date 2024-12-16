@@ -2057,14 +2057,15 @@ namespace vMenuClient.menus
                 {
                     currentHeadlightColor = 13;
                 }
+                bool isLowGripAvailable = GetGameBuildNumber() >= 2372;
                 var headlightColor = new MenuListItem("Couleur des phares", new List<string>() { "Blanc", "Bleu", "Bleu électrique", "Vert menthe", "Vert citron", "Jaune", "Golden Shower", "Orange", "Rouge", "Pony Pink", "Hot Pink", "Purple", "Blacklight", "Default Xenon" }, currentHeadlightColor, "Nouveau dans la mise à jour Arena Wars GTA V : phares colorés. Notez que vous devez d'abord activer les phares au xénon.");
+                var lowGripTires = new MenuCheckboxItem("Low Grip Tires", "Enable or disable ~y~low grip tires~s~ for this vehicle.", isLowGripAvailable ? GetDriftTyresEnabled(veh.Handle) : false);
+
                 VehicleModMenu.AddMenuItem(headlightColor);
                 VehicleModMenu.AddMenuItem(turbo);
                 VehicleModMenu.AddMenuItem(bulletProofTires);
-                {bool isLowGripAvailable = GetGameBuildNumber() >= 2372;
 
-                if (IsAllowed(Permission.MSDriftMode) && isLowGripAvailable)
-                	var lowGripTires = new MenuCheckboxItem("Low Grip Tires", "Enable or disable ~y~low grip tires~s~ for this vehicle.", isLowGripAvailable ? GetDriftTyresEnabled(veh.Handle) : false);
+                if (IsAllowed(Permission.MSDriftMode) && isLowGripAvailable) {
                     VehicleModMenu.AddMenuItem(lowGripTires);
                 }
 
