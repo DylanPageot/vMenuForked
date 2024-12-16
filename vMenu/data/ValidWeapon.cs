@@ -264,7 +264,7 @@ namespace vMenuClient.data
             { "weapon_m6ic", "M6IC"},
             { "weapon_axmc", "AI AXMC"},
             { "weapon_mp7", "HK MP7"},
-            { "weapon_megaphone", "Mégaphone"}
+            { "weapon_megaphone", "Mégaphone"},
             // MP2024_01 DLC (V 3258)
             { "weapon_stunrod", GetLabelText("WTD_STUNROD") },
         };
@@ -393,7 +393,7 @@ namespace vMenuClient.data
             { "weapon_m6ic", "M6IC"},
             { "weapon_axmc", "AI AXMC"},
             { "weapon_mp7", "HK MP7"},
-            { "weapon_megaphone", "Mégaphone"}
+            { "weapon_megaphone", "Mégaphone"},
             // MP2024_01 DLC (V 3258)
             { "weapon_stunrod", GetLabelText("WT_STUNROD") },
         };
@@ -524,7 +524,7 @@ namespace vMenuClient.data
             ["weapon_m6ic"] = Permission.WPM6IC,
             ["weapon_axmc"] = Permission.WPAXMC,
             ["weapon_mp7"] = Permission.WPMP7,
-            ["weapon_megaphone"] = Permission.WPMegaphone
+            ["weapon_megaphone"] = Permission.WPMegaphone,
             // MP2024_01 DLC (V 3258)
             ["weapon_stunrod"] = Permission.WPStunRod,
         };
