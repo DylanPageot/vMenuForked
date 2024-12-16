@@ -47,6 +47,7 @@ namespace vMenuClient.menus
         public bool FlashHighbeamsOnHonk { get; private set; } = UserDefaults.VehicleHighbeamsOnHonk;
         public bool DisablePlaneTurbulence { get; private set; } = UserDefaults.VehicleDisablePlaneTurbulence;
         public bool DisableHelicopterTurbulence { get; private set; } = UserDefaults.VehicleDisableHelicopterTurbulence;
+        public bool AnchorBoat { get; private set; } = UserDefaults.VehicleAnchorBoat;
         public bool VehicleBikeSeatbelt { get; private set; } = UserDefaults.VehicleBikeSeatbelt;
         public bool VehicleInfiniteFuel { get; private set; } = false;
         public bool VehicleShowHealth { get; private set; } = false;
@@ -89,6 +90,7 @@ namespace vMenuClient.menus
             var highbeamsOnHonk = new MenuCheckboxItem("Appels de phares en klaxonnant", "Allumez vos feux de route sur votre véhicule lorsque vous klaxonnez. Ne fonctionne pas pendant la journée lorsque vos lumières sont éteintes.", FlashHighbeamsOnHonk);
             var showHealth = new MenuCheckboxItem("Afficher l'état du véhicule", "Affiche l'état du véhicule à l'écran.", VehicleShowHealth);
             var infiniteFuel = new MenuCheckboxItem("Carburant infini", "Active ou désactive le carburant infini pour ce véhicule.", VehicleInfiniteFuel);
+            var vehicleSetAnchor = new MenuCheckboxItem("Anchor Boat", "Only works if the current vehicle is a boat and its position is valid for anchoring", AnchorBoat);
 
             // Create buttons.
             var fixVehicle = new MenuItem("Réparer le véhicule", "Réparez tout dommage visuel et physique présent sur votre véhicule.");
@@ -174,11 +176,25 @@ namespace vMenuClient.menus
 
             // Create lists.
             var dirtlevel = new List<string> { "Propre", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" };
-            var setDirtLevel = new MenuListItem("Modifier le niveau de saleté", dirtlevel, 0, "Sélectionnez la quantité de saleté qui doit être visible sur votre véhicule, appuyez sur ~r~enter~s~ pour appliquer le niveau sélectionné.");
-            var licensePlates = new List<string> { GetLabelText("CMOD_PLA_0"), GetLabelText("CMOD_PLA_1"), GetLabelText("CMOD_PLA_2"), GetLabelText("CMOD_PLA_3"),
-                GetLabelText("CMOD_PLA_4"), "North Yankton" };
-            var setLicensePlateType = new MenuListItem("Type de plaque d'immatriculation", licensePlates, 0, "Choisissez un type de plaque d'immatriculation et appuyez sur ~r~enter ~s~pour appliquer " +
-                "à votre véhicule.");
+            var setDirtLevel = new MenuListItem("Set Dirt Level", dirtlevel, 0, "Select how much dirt should be visible on your vehicle, press ~r~enter~s~ " +
+                "to apply the selected level.");
+            var licensePlates = new List<string> {
+                GetLabelText("CMOD_PLA_0"), // Plate Index 0 // BlueOnWhite1
+                GetLabelText("CMOD_PLA_1"), // Plate Index 1 // YellowOnBlack
+                GetLabelText("CMOD_PLA_2"), // Plate Index 2 // YellowOnBlue
+                GetLabelText("CMOD_PLA_3"), // Plate Index 3 // BlueOnWhite2
+                GetLabelText("CMOD_PLA_4"), // Plate Index 4 // BlueOnWhite3
+                "North Yankton", // Plate Index 5 // NorthYankton
+                GetLabelText("CMOD_PLA_6"), // Plate Index 6 // ECola
+                GetLabelText("CMOD_PLA_7"), // Plate Index 7 // LasVenturas
+                GetLabelText("CMOD_PLA_8"), // Plate Index 8 // LibertyCity
+                GetLabelText("CMOD_PLA_9"), // Plate Index 9 // LSCarMeet
+                GetLabelText("CMOD_PLA_10"), // Plate Index 10 // LSPanic
+                GetLabelText("CMOD_PLA_11"), // Plate Index 11 // LSPounders
+                GetLabelText("CMOD_PLA_12"), // Plate Index 12 // Sprunk
+            };
+            var setLicensePlateType = new MenuListItem("License Plate Type", licensePlates, 0, "Choose a license plate type and press ~r~enter ~s~to apply " +
+                "it to your vehicle.");
             var torqueMultiplierList = new List<string>();
             var powerMultiplierList = new List<string>();
             if (IsAllowed(Permission.OPWaypoint))
@@ -363,6 +379,10 @@ namespace vMenuClient.menus
             {
                 menu.AddMenuItem(vehicleNoTurbulence);
                 menu.AddMenuItem(vehicleNoTurbulenceHeli);
+            }
+            if (IsAllowed(Permission.VOAnchorBoat))
+            {
+                menu.AddMenuItem(vehicleSetAnchor);
             }
             if (IsAllowed(Permission.VOFlip)) // FLIP VEHICLE
             {
@@ -668,6 +688,25 @@ namespace vMenuClient.menus
                         }
                     }
                 }
+                else if (item == vehicleSetAnchor)
+                {
+                    AnchorBoat = _checked;
+                    if (vehicle != null && vehicle.Exists() && vehicle.Model.IsBoat && CanAnchorBoatHere(vehicle.Handle))
+                    {
+                        if (MainMenu.VehicleOptionsMenu.AnchorBoat)
+                        {
+                            SetBoatAnchor(vehicle.Handle, true);
+                            SetBoatFrozenWhenAnchored(vehicle.Handle, true);
+                            SetForcedBoatLocationWhenAnchored(vehicle.Handle, true);
+                        }
+                        else
+                        {
+                            SetBoatAnchor(vehicle.Handle, false);
+                            SetBoatFrozenWhenAnchored(vehicle.Handle, false);
+                            SetForcedBoatLocationWhenAnchored(vehicle.Handle, false);
+                        }
+                    }
+                }
                 else if (item == vehicleNeverDirty)
                 {
                     VehicleNeverDirty = _checked;
@@ -719,19 +758,40 @@ namespace vMenuClient.menus
                                 veh.Mods.LicensePlateStyle = LicensePlateStyle.BlueOnWhite1;
                                 break;
                             case 1:
-                                veh.Mods.LicensePlateStyle = LicensePlateStyle.BlueOnWhite2;
+                                veh.Mods.LicensePlateStyle = LicensePlateStyle.YellowOnBlack;
                                 break;
                             case 2:
-                                veh.Mods.LicensePlateStyle = LicensePlateStyle.BlueOnWhite3;
-                                break;
-                            case 3:
                                 veh.Mods.LicensePlateStyle = LicensePlateStyle.YellowOnBlue;
                                 break;
+                            case 3:
+                                veh.Mods.LicensePlateStyle = LicensePlateStyle.BlueOnWhite2;
+                                break;
                             case 4:
-                                veh.Mods.LicensePlateStyle = LicensePlateStyle.YellowOnBlack;
+                                veh.Mods.LicensePlateStyle = LicensePlateStyle.BlueOnWhite3;
                                 break;
                             case 5:
                                 veh.Mods.LicensePlateStyle = LicensePlateStyle.NorthYankton;
+                                break;
+                            case 6:
+                                veh.Mods.LicensePlateStyle = LicensePlateStyle.ECola;
+                                break;
+                            case 7:
+                                veh.Mods.LicensePlateStyle = LicensePlateStyle.LasVenturas;
+                                break;
+                            case 8:
+                                veh.Mods.LicensePlateStyle = LicensePlateStyle.LibertyCity;
+                                break;
+                            case 9:
+                                veh.Mods.LicensePlateStyle = LicensePlateStyle.LSCarMeet;
+                                break;
+                            case 10:
+                                veh.Mods.LicensePlateStyle = LicensePlateStyle.LSPanic;
+                                break;
+                            case 11:
+                                veh.Mods.LicensePlateStyle = LicensePlateStyle.LSPounders;
+                                break;
+                            case 12:
+                                veh.Mods.LicensePlateStyle = LicensePlateStyle.Sprunk;
                                 break;
                             default:
                                 break;
@@ -1117,7 +1177,7 @@ namespace vMenuClient.menus
 
                     if (sender == primaryColorsMenu)
                     {
-                        if (itemIndex == 1)
+                        if (itemIndex == 2)
                         {
                             pearlColor = VehicleData.ClassicColors[newIndex].id;
                         }
@@ -1129,26 +1189,27 @@ namespace vMenuClient.menus
                         switch (itemIndex)
                         {
                             case 0:
-                            case 1:
+                            case 1:    
+                            case 2:
                                 primaryColor = VehicleData.ClassicColors[newIndex].id;
                                 break;
-                            case 2:
+                            case 3:
                                 primaryColor = VehicleData.MatteColors[newIndex].id;
                                 break;
-                            case 3:
+                            case 4:
                                 primaryColor = VehicleData.MetalColors[newIndex].id;
                                 break;
-                            case 4:
+                            case 5:
                                 primaryColor = VehicleData.UtilColors[newIndex].id;
                                 break;
-                            case 5:
+                            case 6:
                                 primaryColor = VehicleData.WornColors[newIndex].id;
                                 break;
                         }
 
                         if (GetSettingsBool(Setting.vmenu_using_chameleon_colours))
                         {
-                            if (itemIndex == 6)
+                            if (itemIndex == 7)
                             {
                                 primaryColor = VehicleData.ChameleonColors[newIndex].id;
                                 secondaryColor = VehicleData.ChameleonColors[newIndex].id;
@@ -1157,6 +1218,7 @@ namespace vMenuClient.menus
                             }
                         }
 
+                        ClearVehicleCustomPrimaryColour(veh.Handle);
                         SetVehicleColours(veh.Handle, primaryColor, secondaryColor);
                     }
                     else if (sender == secondaryColorsMenu)
@@ -1164,25 +1226,28 @@ namespace vMenuClient.menus
                         switch (itemIndex)
                         {
                             case 0:
+                            case 1:
                                 pearlColor = VehicleData.ClassicColors[newIndex].id;
                                 break;
-                            case 1:
                             case 2:
+                            case 3:
                                 secondaryColor = VehicleData.ClassicColors[newIndex].id;
                                 break;
-                            case 3:
+                            case 4:
                                 secondaryColor = VehicleData.MatteColors[newIndex].id;
                                 break;
-                            case 4:
+                            case 5:
                                 secondaryColor = VehicleData.MetalColors[newIndex].id;
                                 break;
-                            case 5:
+                            case 6:
                                 secondaryColor = VehicleData.UtilColors[newIndex].id;
                                 break;
-                            case 6:
+                            case 7:
                                 secondaryColor = VehicleData.WornColors[newIndex].id;
                                 break;
                         }
+                        
+                        ClearVehicleCustomSecondaryColour(veh.Handle);
                         SetVehicleColours(veh.Handle, primaryColor, secondaryColor);
                     }
                     else if (sender == VehicleColorsMenu)
@@ -1222,9 +1287,39 @@ namespace vMenuClient.menus
                 }
             }
 
+            async void HandleItemSelect(Menu menu, MenuItem menuItem, int itemIndex)
+            {
+                Vehicle veh = GetVehicle();
+                if (veh != null && veh.Exists() && !veh.IsDead && veh.Driver == Game.PlayerPed)
+                {
+                    string rawRValue = await GetUserInput("Custom RGB - R Value (number from 0-255)", "0", 3);
+                    string rawGValue = await GetUserInput("Custom RGB - G Value (number from 0-255)", "0", 3);
+                    string rawBValue = await GetUserInput("Custom RGB - B Value (number from 0-255)", "0", 3);
+                    int rValue;
+                    int gValue;
+                    int bValue;
+
+                    if (!int.TryParse(rawRValue, out rValue) || !int.TryParse(rawGValue, out gValue) || !int.TryParse(rawBValue, out bValue))
+                    {
+                        Notify.Error("An invalid RGB value was entered, ensure you enter numbers between 0 and 255");
+                        return;
+                    }
+
+                    if (menu == primaryColorsMenu)
+                    {
+                        SetVehicleCustomPrimaryColour(veh.Handle, rValue, gValue, bValue);
+                    }
+                    else if (menu == secondaryColorsMenu)
+                    {
+                        SetVehicleCustomSecondaryColour(veh.Handle, rValue, gValue, bValue);
+                    }
+                }
+            }
+
             for (var i = 0; i < 2; i++)
             {
-                var pearlescentList = new MenuListItem("Nacrée", classic, 0);
+                var customColour = new MenuItem("Custom RGB") { Label = ">>>" };
+				var pearlescentList = new MenuListItem("Nacrée", classic, 0);
                 var classicList = new MenuListItem("Classique", classic, 0);
                 var metallicList = new MenuListItem("Métalisée", classic, 0);
                 var matteList = new MenuListItem("Mat", matte, 0);
@@ -1234,6 +1329,7 @@ namespace vMenuClient.menus
 
                 if (i == 0)
                 {
+                    primaryColorsMenu.AddMenuItem(customColour);
                     primaryColorsMenu.AddMenuItem(classicList);
                     primaryColorsMenu.AddMenuItem(metallicList);
                     primaryColorsMenu.AddMenuItem(matteList);
@@ -1249,9 +1345,11 @@ namespace vMenuClient.menus
                     }
 
                     primaryColorsMenu.OnListIndexChange += HandleListIndexChanges;
+                    primaryColorsMenu.OnItemSelect += HandleItemSelect;
                 }
                 else
                 {
+                    secondaryColorsMenu.AddMenuItem(customColour);
                     secondaryColorsMenu.AddMenuItem(pearlescentList);
                     secondaryColorsMenu.AddMenuItem(classicList);
                     secondaryColorsMenu.AddMenuItem(metallicList);
@@ -1261,6 +1359,7 @@ namespace vMenuClient.menus
                     secondaryColorsMenu.AddMenuItem(wornList);
 
                     secondaryColorsMenu.OnListIndexChange += HandleListIndexChanges;
+                    secondaryColorsMenu.OnItemSelect += HandleItemSelect;
                 }
             }
             #endregion
@@ -1768,20 +1867,41 @@ namespace vMenuClient.menus
                             case LicensePlateStyle.BlueOnWhite1:
                                 listItem.ListIndex = 0;
                                 break;
-                            case LicensePlateStyle.BlueOnWhite2:
+                            case LicensePlateStyle.YellowOnBlack:
                                 listItem.ListIndex = 1;
                                 break;
-                            case LicensePlateStyle.BlueOnWhite3:
+                            case LicensePlateStyle.YellowOnBlue:
                                 listItem.ListIndex = 2;
                                 break;
-                            case LicensePlateStyle.YellowOnBlue:
+                            case LicensePlateStyle.BlueOnWhite2:
                                 listItem.ListIndex = 3;
                                 break;
-                            case LicensePlateStyle.YellowOnBlack:
+                            case LicensePlateStyle.BlueOnWhite3:
                                 listItem.ListIndex = 4;
                                 break;
                             case LicensePlateStyle.NorthYankton:
                                 listItem.ListIndex = 5;
+                                break;
+                            case LicensePlateStyle.ECola:
+                                listItem.ListIndex = 6;
+                                break;
+                            case LicensePlateStyle.LasVenturas:
+                                listItem.ListIndex = 7;
+                                break;
+                            case LicensePlateStyle.LibertyCity:
+                                listItem.ListIndex = 8;
+                                break;
+                            case LicensePlateStyle.LSCarMeet:
+                                listItem.ListIndex = 9;
+                                break;
+                            case LicensePlateStyle.LSPanic:
+                                listItem.ListIndex = 10;
+                                break;
+                            case LicensePlateStyle.LSPounders:
+                                listItem.ListIndex = 11;
+                                break;
+                            case LicensePlateStyle.Sprunk:
+                                listItem.ListIndex = 12;
                                 break;
                             default:
                                 break;
@@ -1915,6 +2035,7 @@ namespace vMenuClient.menus
                     "Benny's (2)",  // 9
                     "Roue ouverte",   // 10
                     "Rue",       // 11
+                    "Track"        // 11
                 };
                 var vehicleWheelType = new MenuListItem("Type de roue", wheelTypes, MathUtil.Clamp(GetVehicleWheelType(veh.Handle), 0, 12), $"Choisissez un ~y~type de roue~s~ pour votre véhicule.");
                 if (!veh.Model.IsBoat && !veh.Model.IsHelicopter && !veh.Model.IsPlane && !veh.Model.IsBicycle && !veh.Model.IsTrain)
@@ -1927,7 +2048,6 @@ namespace vMenuClient.menus
                 var xenonHeadlights = new MenuCheckboxItem("Phares Xénon", "Activer ou désactiver les phares ~b~Xénon ~s~.", IsToggleModOn(veh.Handle, 22));
                 var turbo = new MenuCheckboxItem("Turbo", "Activez ou désactivez le ~y~turbo~s~ pour ce véhicule.", IsToggleModOn(veh.Handle, 18));
                 var bulletProofTires = new MenuCheckboxItem("Pneus pare-balles", "Activez ou désactivez les ~y~pneus pare-balles~s~ pour ce véhicule.", !GetVehicleTyresCanBurst(veh.Handle));
-                var lowGripTires = new MenuCheckboxItem("Low Grip Tires", "Enable or disable ~y~low grip tires~s~ for this vehicle.", GetDriftTyresEnabled(veh.Handle));
 
                 // Add the checkboxes to the menu.
                 VehicleModMenu.AddMenuItem(toggleCustomWheels);
@@ -1941,8 +2061,10 @@ namespace vMenuClient.menus
                 VehicleModMenu.AddMenuItem(headlightColor);
                 VehicleModMenu.AddMenuItem(turbo);
                 VehicleModMenu.AddMenuItem(bulletProofTires);
-                if (IsAllowed(Permission.MSDriftMode))
-                {
+                {bool isLowGripAvailable = GetGameBuildNumber() >= 2372;
+
+                if (IsAllowed(Permission.MSDriftMode) && isLowGripAvailable)
+                	var lowGripTires = new MenuCheckboxItem("Low Grip Tires", "Enable or disable ~y~low grip tires~s~ for this vehicle.", isLowGripAvailable ? GetDriftTyresEnabled(veh.Handle) : false);
                     VehicleModMenu.AddMenuItem(lowGripTires);
                 }
 

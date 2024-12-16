@@ -248,7 +248,7 @@ namespace vMenuClient
         /// <returns></returns>
         public static bool IsPedPointing(int handle)
         {
-            return N_0x921ce12c489c4c41(handle);
+            return IsTaskMoveNetworkActive(handle);
         }
 
         /// <summary>
@@ -2107,7 +2107,26 @@ namespace vMenuClient
                 ToggleVehicleMod(vehicle.Handle, 22, vehicleInfo.xenonHeadlights);
                 SetVehicleLivery(vehicle.Handle, vehicleInfo.livery);
 
-                SetVehicleColours(vehicle.Handle, vehicleInfo.colors["primary"], vehicleInfo.colors["secondary"]);
+                bool useCustomRgbPrimary = vehicleInfo.colors.ContainsKey("customPrimaryR") && vehicleInfo.colors.ContainsKey("customPrimaryG") && vehicleInfo.colors.ContainsKey("customPrimaryB");
+                if (useCustomRgbPrimary && vehicleInfo.colors["customPrimaryR"] > 0 && vehicleInfo.colors["customPrimaryG"] > 0 && vehicleInfo.colors["customPrimaryB"] > 0)
+                {
+                    vehicle.Mods.CustomPrimaryColor = System.Drawing.Color.FromArgb(255, vehicleInfo.colors["customPrimaryR"], vehicleInfo.colors["customPrimaryG"], vehicleInfo.colors["customPrimaryB"]);
+                }
+                else
+                {
+                    vehicle.Mods.PrimaryColor = (VehicleColor)vehicleInfo.colors["primary"];
+                }
+
+                bool useCustomRgbSecondary = vehicleInfo.colors.ContainsKey("customSecondaryR") && vehicleInfo.colors.ContainsKey("customSecondaryG") && vehicleInfo.colors.ContainsKey("customSecondaryB");
+                if (useCustomRgbSecondary && vehicleInfo.colors["customSecondaryR"] > 0 && vehicleInfo.colors["customSecondaryG"] > 0 && vehicleInfo.colors["customSecondaryB"] > 0)
+                {
+                    vehicle.Mods.CustomSecondaryColor = System.Drawing.Color.FromArgb(255, vehicleInfo.colors["customSecondaryR"], vehicleInfo.colors["customSecondaryR"], vehicleInfo.colors["customSecondaryB"]);
+                }
+                else
+                {
+                    vehicle.Mods.SecondaryColor = (VehicleColor)vehicleInfo.colors["secondary"];
+                }
+
                 SetVehicleInteriorColour(vehicle.Handle, vehicleInfo.colors["trim"]);
                 SetVehicleDashboardColour(vehicle.Handle, vehicleInfo.colors["dash"]);
 
@@ -2189,7 +2208,7 @@ namespace vMenuClient
         /// <summary>
         /// Saves the vehicle the player is currently in to the client's kvp storage.
         /// </summary>
-        public static async void SaveVehicle(string updateExistingSavedVehicleName = null)
+        public static async void SaveVehicle(string updateExistingSavedVehicleName = null, string existingCatergory = null)
         {
             // Only continue if the player is in a vehicle.
             if (Game.PlayerPed.IsInVehicle())
@@ -2242,6 +2261,20 @@ namespace vMenuClient
                     colors.Add("tyresmokeR", tyresmokeR);
                     colors.Add("tyresmokeG", tyresmokeG);
                     colors.Add("tyresmokeB", tyresmokeB);
+                    int customPrimaryR = -1;
+                    int customPrimaryG = -1;
+                    int customPrimaryB = -1;
+                    GetVehicleCustomPrimaryColour(veh.Handle, ref customPrimaryR, ref customPrimaryG, ref customPrimaryB);
+                    colors.Add("customPrimaryR", customPrimaryR);
+                    colors.Add("customPrimaryG", customPrimaryG);
+                    colors.Add("customPrimaryB", customPrimaryB);
+                    int customSecondaryR = -1;
+                    int customSecondaryG = -1;
+                    int customSecondaryB = -1;
+                    GetVehicleCustomSecondaryColour(veh.Handle, ref customSecondaryR, ref customSecondaryG, ref customSecondaryB);
+                    colors.Add("customSecondaryR", customSecondaryR);
+                    colors.Add("customSecondaryG", customSecondaryG);
+                    colors.Add("customSecondaryB", customSecondaryB);
                     #endregion
 
                     var extras = new Dictionary<int, bool>();
@@ -2277,7 +2310,7 @@ namespace vMenuClient
                         bulletProofTires = !veh.CanTiresBurst,
                         headlightColor = VehicleOptions.GetHeadlightsColorForVehicle(veh),
                         enveffScale = GetVehicleEnveffScale(veh.Handle),
-                        Category = "Uncategorized"
+                        Category = string.IsNullOrEmpty(existingCatergory) ? "Uncategorized" : existingCatergory
                     };
 
                     #endregion

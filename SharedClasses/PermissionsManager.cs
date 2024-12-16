@@ -51,6 +51,8 @@ namespace vMenuShared
             PONoRagdoll,
             PONeverWanted,
             POSetWanted,
+            POClearBlood,
+            POSetBlood,
             POIgnored,
             POStayInVehicle,
             POMaxHealth,
@@ -99,6 +101,7 @@ namespace vMenuShared
             VOUnderglow,
             VOFlashHighbeamsOnHonk,
             VODisableTurbulence,
+            VOAnchorBoat,
             VOInfiniteFuel,
             VOFlares,
             VOPlaneBombs,
@@ -329,6 +332,8 @@ namespace vMenuShared
             WPAXMC,
             WPMP7,
             WPMegaphone,
+            // MP2024_01 DLC (V 3258)
+            WPStunRod,
             #endregion
 
             // Weapon Loadouts Menu
