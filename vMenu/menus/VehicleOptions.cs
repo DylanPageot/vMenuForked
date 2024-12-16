@@ -179,9 +179,20 @@ namespace vMenuClient.menus
                 GetLabelText("CMOD_PLA_4"), "North Yankton" };
             var setLicensePlateType = new MenuListItem("Type de plaque d'immatriculation", licensePlates, 0, "Choisissez un type de plaque d'immatriculation et appuyez sur ~r~enter ~s~pour appliquer " +
                 "à votre véhicule.");
-            var torqueMultiplierList = new List<string> { "x2", "x4", "x8", "x16", "x32", "x64", "x128", "x256", "x512", "x1024" };
+            var torqueMultiplierList = new List<string>();
+            var powerMultiplierList = new List<string>();
+            if (IsAllowed(Permission.OPWaypoint))
+            {
+                torqueMultiplierList = new List<string> { "x2", "x4", "x8", "x16", "x32", "x64", "x128", "x256", "x512", "x1024", "x2048", "x4096", "x8192" };
+                powerMultiplierList = new List<string> { "x2", "x4", "x8", "x16", "x32", "x64", "x128", "x256", "x512", "x1024", "x2048", "x4096", "x8192"};
+
+            }
+            else
+            {
+                torqueMultiplierList = new List<string> { "x2", "x4", "x8", "x16", "x32", "x64" };
+                powerMultiplierList = new List<string> { "x2", "x4", "x8", "x16", "x32", "x64" };
+            }
             var torqueMultiplier = new MenuListItem("Définir le multiplicateur de couple moteur", torqueMultiplierList, 0, "Définir le multiplicateur de couple moteur.");
-            var powerMultiplierList = new List<string> { "x2", "x4", "x8", "x16", "x32", "x64", "x128", "x256", "x512", "x1024" };
             var powerMultiplier = new MenuListItem("Définir le multiplicateur de puissance du moteur", powerMultiplierList, 0, "Définir le multiplicateur de puissance du moteur.");
             var speedLimiterOptions = new List<string>() { "Activer", "Remettre à zéro", "Limite personnalisé" };
             var speedLimiter = new MenuListItem("Limiteur de vitesse", speedLimiterOptions, 0, "Réglez la vitesse maximale de votre véhicule sur votre ~y~vitesse actuelle~s~. La réinitialisation de la vitesse maximale de votre véhicule rétablira la vitesse maximale de votre véhicule actuel par défaut. Seul votre véhicule actuel est concerné par cette option.");
