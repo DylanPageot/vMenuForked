@@ -332,6 +332,9 @@ namespace vMenuShared
             WPAXMC,
             WPMP7,
             WPMegaphone,
+            WPSpreader,
+            WPCutter,
+            WPGlassMaster,
             // MP2024_01 DLC (V 3258)
             WPStunRod,
             #endregion
