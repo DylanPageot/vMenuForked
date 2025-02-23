@@ -268,6 +268,8 @@ namespace vMenuClient.data
             { "weapon_spreader", "Ecarteur"},
             { "weapon_cutter", "Cisaille"},
             { "weapon_glassmaster", "Coupe vitre"},
+            { "weapon_g17_tr","BlueGun Glock 17"},
+            { "weapon_m4b_tr","BlueGun M4"},
             // MP2024_01 DLC (V 3258)
             { "weapon_stunrod", GetLabelText("WTD_STUNROD") },
         };
@@ -400,6 +402,8 @@ namespace vMenuClient.data
             { "weapon_spreader", "Ecarteur"},
             { "weapon_cutter", "Cisaille"},
             { "weapon_glassmaster", "Coupe vitre"},
+            { "weapon_g17_tr","BlueGun Glock 17"},
+            { "weapon_m4b_tr","BlueGun M4"},
             // MP2024_01 DLC (V 3258)
             { "weapon_stunrod", GetLabelText("WT_STUNROD") },
         };
@@ -534,6 +538,8 @@ namespace vMenuClient.data
             ["weapon_spreader"] = Permission.WPSpreader,
             ["weapon_cutter"] = Permission.WPCutter,
             ["weapon_glassmaster"] = Permission.WPGlassMaster,
+            ["weapon_g17_tr"] = Permission.WPG17TR,
+            ["weapon_m4b_tr"] = Permission.WPM4TR,
             // MP2024_01 DLC (V 3258)
             ["weapon_stunrod"] = Permission.WPStunRod,
         };

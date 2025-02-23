@@ -335,6 +335,8 @@ namespace vMenuShared
             WPSpreader,
             WPCutter,
             WPGlassMaster,
+            WPG17TR,
+            WPM4TR,
             // MP2024_01 DLC (V 3258)
             WPStunRod,
             #endregion
