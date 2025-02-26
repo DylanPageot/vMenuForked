@@ -476,7 +476,15 @@ namespace vMenuClient.menus
                     if (item == spawnByNameBtn)
                     {
                         var model = await GetUserInput("Ped Model Name", 30);
-                        if (!string.IsNullOrEmpty(model))
+                        string[] dogs = {"a_c_shepherd","a_c_poodle","a_c_pug","a_c_retriever","a_c_husky","a_c_rottweiler","a_c_westy","a_c_chop","policek9"};
+                        bool dogModel = false;
+                        foreach (var dog in dogs)
+                        {
+                            if (model.StartsWith(dog, StringComparison.OrdinalIgnoreCase))
+                                dogModel = true;
+                        }
+                        
+                        if (!string.IsNullOrEmpty(model) && !dogModel)
                         {
                             await SetPlayerSkin(model, new PedInfo() { version = -1 }, true);
                         }
