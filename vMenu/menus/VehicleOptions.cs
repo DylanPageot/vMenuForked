@@ -185,11 +185,11 @@ namespace vMenuClient.menus
                 GetLabelText("CMOD_PLA_3"), // Plate Index 3 // BlueOnWhite2
                 GetLabelText("CMOD_PLA_4"), // Plate Index 4 // BlueOnWhite3
                 "North Yankton", // Plate Index 5 // NorthYankton
-                GetLabelText("CMOD_PLA_6"), // Plate Index 6 // ECola
-                GetLabelText("CMOD_PLA_7"), // Plate Index 7 // LasVenturas
-                GetLabelText("CMOD_PLA_8"), // Plate Index 8 // LibertyCity
-                GetLabelText("CMOD_PLA_9"), // Plate Index 9 // LSCarMeet
-                GetLabelText("CMOD_PLA_10"), // Plate Index 10 // LSPanic
+                "MadonneStudio", // Plate Index 6 // ECola
+                "Robada", // Plate Index 7 // LasVenturas
+                "Robada Highay Patrol", // Plate Index 8 // LibertyCity
+                "Plaque fédérale", // Plate Index 9 // LSCarMeet
+                "Liberty City", // Plate Index 10 // LSPanic
                 GetLabelText("CMOD_PLA_11"), // Plate Index 11 // LSPounders
                 GetLabelText("CMOD_PLA_12"), // Plate Index 12 // Sprunk
             };

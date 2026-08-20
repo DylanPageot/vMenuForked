@@ -270,6 +270,8 @@ namespace vMenuClient.data
             { "weapon_glassmaster", "Coupe vitre"},
             { "weapon_g17_tr","BlueGun Glock 17"},
             { "weapon_m4b_tr","BlueGun M4"},
+            { "weapon_stungun2", "Tazer (2)"},
+            { "weapon_beanbag2", "Beabgag (2)"},
             // MP2024_01 DLC (V 3258)
             { "weapon_stunrod", GetLabelText("WTD_STUNROD") },
         };
@@ -404,6 +406,8 @@ namespace vMenuClient.data
             { "weapon_glassmaster", "Coupe vitre"},
             { "weapon_g17_tr","BlueGun Glock 17"},
             { "weapon_m4b_tr","BlueGun M4"},
+            { "weapon_stungun2", "Tazer (2)"},
+            { "weapon_beanbag2", "Beabgag (2)"},
             // MP2024_01 DLC (V 3258)
             { "weapon_stunrod", GetLabelText("WT_STUNROD") },
         };
@@ -540,6 +544,8 @@ namespace vMenuClient.data
             ["weapon_glassmaster"] = Permission.WPGlassMaster,
             ["weapon_g17_tr"] = Permission.WPG17TR,
             ["weapon_m4b_tr"] = Permission.WPM4TR,
+            ["weapon_beanbag2"] = Permission.WPBeanBag,
+            ["weapon_stungun2"] = Permission.WPStunGun,
             // MP2024_01 DLC (V 3258)
             ["weapon_stunrod"] = Permission.WPStunRod,
         };
@@ -968,13 +974,12 @@ namespace vMenuClient.data
             // CUSTOM
             ["COMPONENT_FMLITESCOPE_03"] = "Micro T1 Aimpoint",
             ["COMPONENT_FMLITESCOPE_01"] = "Trijicon ACOG",
-            ["COMPONENT_FMLITESCOPE_02"] = "Aimpoint M4",
             ["COMPONENT_FMLITESCOPE_04"] = "Leupold LCO",
             ["COMPONENT_FMLITESCOPE_06"] = "Eotech Noire",
             ["COMPONENT_FMLITESCOPE_07"] = "Eotech Tan",
-            ["COMPONENT_FMLITESCOPE_08"] = "Eotech + G33 Noire",
-            ["COMPONENT_FMLITESCOPE_010"] = "Eotech + G33 Tan",
-            ["COMPONENT_FMLITESCOPE_012"] = "SOW FoV-S7",            
+            ["COMPONENT_FMLITESCOPE_08"] = "Eotech + G33 Noir",
+            ["COMPONENT_FMLITESCOPE_10"] = "Eotech + G33 Tan",      // Bite
+            ["COMPONENT_FMLITESCOPE_12"] = "SOW FoV-S7",            // Bite
             ["COMPONENT_M6IC_FLSH_02"] = "Lampe Torche",
             ["COMPONENT_M6IC_CLIP_01"] = "Chargeur PMAG M3 Noire",
             ["COMPONENT_M6IC_CLIP_02"] = "Chargeur PMAG M3 Tan",

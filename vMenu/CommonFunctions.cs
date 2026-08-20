@@ -1864,7 +1864,7 @@ namespace vMenuClient
                 }
                 
                 if (nearestDistance < 200)
-        {
+                {
                     ShowNotification("~g~Votre véhicule est prêt. Il vous attend sur la place de parking la plus proche !");
                 }
                 else
@@ -2125,6 +2125,11 @@ namespace vMenuClient
                 else
                 {
                     vehicle.Mods.SecondaryColor = (VehicleColor)vehicleInfo.colors["secondary"];
+                }
+
+                if (!useCustomRgbPrimary && !useCustomRgbSecondary)
+                {
+                    SetVehicleColours(vehicle.Handle, vehicleInfo.colors["primary"],vehicleInfo.colors["secondary"]);
                 }
 
                 SetVehicleInteriorColour(vehicle.Handle, vehicleInfo.colors["trim"]);

@@ -49,6 +49,8 @@ namespace vMenuClient
             EventHandlers.Add("vMenu:GetOutOfCar", new Action<int, int>(GetOutOfCar));
             EventHandlers.Add("vMenu:PrivateMessage", new Action<string, string>(PrivateMessage));
             EventHandlers.Add("vMenu:UpdateTeleportLocations", new Action<string>(UpdateTeleportLocations));
+            EventHandlers.Add("vMenu:StopSyncTime", new Action(StopSyncTime));
+            EventHandlers.Add("vMenu:ResumeSyncTime", new Action(ResumeSyncTime));
 
             if (GetSettingsBool(Setting.vmenu_enable_weather_sync))
             {
@@ -401,6 +403,16 @@ namespace vMenuClient
         private void UpdateTeleportLocations(string jsonData)
         {
             MiscSettings.TpLocations = JsonConvert.DeserializeObject<List<vMenuShared.ConfigManager.TeleportLocation>>(jsonData);
+        }
+
+        private void StopSyncTime()
+        {
+            Tick -= TimeSync;
+        }
+
+        private void ResumeSyncTime()
+        {
+            Tick += TimeSync;
         }
     }
 }
